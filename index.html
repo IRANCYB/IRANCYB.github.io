@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>افشاگری</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #0b0b1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Vazirmatn', sans-serif;
+      padding: 1.5rem;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.05) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.05) 0%, transparent 35%);
+    }
+
+    .card {
+      max-width: 700px;
+      width: 100%;
+      background: rgba(12, 12, 35, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 2.5rem 0.8rem 2.5rem 0.8rem;
+      padding: 2.5rem 2rem;
+      box-shadow: 
+        0 0 30px rgba(0, 255, 255, 0.15),
+        0 0 60px rgba(255, 0, 255, 0.1);
+      border: 1px solid rgba(0, 255, 255, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg at 50% 50%, 
+        transparent, rgba(0, 255, 255, 0.05), transparent, 
+        rgba(255, 0, 255, 0.05), transparent);
+      animation: rotateGlow 25s linear infinite;
+      z-index: -1;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    @keyframes rotateGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 20px #00ffff, 0 0 40px #0055ff;
+      text-align: center;
+      margin-bottom: 0.3rem;
+      letter-spacing: 1px;
+    }
+
+    .sub {
+      text-align: center;
+      color: #8899cc;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      opacity: 0.7;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 1rem;
+    }
+
+    /* جعبه جستجو */
+    .search-box {
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      background: rgba(0, 20, 30, 0.3);
+      border-radius: 2rem 0.5rem 2rem 0.5rem;
+      border: 1px solid rgba(0, 255, 255, 0.12);
+      transition: all 0.3s ease;
+      padding: 0 0.2rem;
+    }
+
+    .search-box:focus-within {
+      border-color: #ff00ff;
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.1);
+    }
+
+    .search-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 0.9rem 1.2rem;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 1rem;
+      color: #d0ddff;
+      outline: none;
+    }
+
+    .search-box input::placeholder {
+      color: rgba(150, 170, 220, 0.3);
+    }
+
+    .search-box button {
+      background: transparent;
+      border: none;
+      color: #00ddff;
+      font-size: 1.5rem;
+      padding: 0.5rem 1rem 0.5rem 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .search-box button:hover {
+      color: #ff66ff;
+      transform: scale(1.1);
+    }
+
+    /* آمار */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-item {
+      background: rgba(10, 10, 30, 0.4);
+      border-radius: 1.2rem 0.3rem 1.2rem 0.3rem;
+      padding: 0.8rem 0.3rem;
+      text-align: center;
+      border: 1px solid rgba(0, 255, 255, 0.06);
+      transition: all 0.2s ease;
+    }
+
+    .stat-item:hover {
+      border-color: rgba(255, 0, 255, 0.15);
+      background: rgba(20, 0, 40, 0.3);
+    }
+
+    .stat-item .number {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 20px #00ffff;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .stat-item .label {
+      font-size: 0.7rem;
+      color: #8899cc;
+      opacity: 0.7;
+      letter-spacing: 0.5px;
+    }
+
+    /* لیست خالی */
+    .empty-list {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: rgba(150, 170, 220, 0.2);
+      border: 1px dashed rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
+      font-size: 0.9rem;
+    }
+
+    .empty-list .big-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      opacity: 0.3;
+    }
+
+    /* بخش افشاها (خالی) */
+    .revelations {
+      min-height: 120px;
+      margin-top: 0.5rem;
+    }
+
+    .revelations .empty-list {
+      border-style: dashed;
+    }
+
+    /* دکمه ساده */
+    .btn-simple {
+      display: block;
+      width: 100%;
+      background: transparent;
+      border: 1px solid rgba(0, 255, 255, 0.1);
+      color: rgba(150, 170, 220, 0.3);
+      padding: 0.7rem;
+      border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
+      margin-top: 1.2rem;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 0.85rem;
+      cursor: default;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .btn-simple:hover {
+      border-color: rgba(255, 0, 255, 0.1);
+      color: rgba(150, 170, 220, 0.5);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 1.8rem;
+      font-size: 0.7rem;
+      color: rgba(150, 170, 220, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      padding-top: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 1.8rem 1.2rem;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+      }
+      .stat-item .number {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🛩 افشاگری دزیآ </h1>
+    <div class="sub">آمار و جستجو · هنوز چیزی ثبت نشده</div>
+
+    <!-- جستجو -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="جستجو ... (خالی)">
+      <button id="searchBtn" aria-label="جستجو">🔍</button>
+    </div>
+
+    <!-- آمار -->
+    <div class="stats">
+      <div class="stat-item">
+        <span class="number" id="countPeople">۰</span>
+        <span class="label">افراد</span>
+      </div>
+      <div class="stat-item">
+        <span class="number" id="countTeams">۰</span>
+        <span class="label">تیم‌های هکری</span>
+      </div>
+      <div class="stat-item">
+        <span class="number" id="countBanks">۰</span>
+        <span class="label">بانک‌ها</span>
+      </div>
+      <div class="stat-item">
+        <span class="number" id="countUniversities">۰</span>
+        <span class="label">دانشگاه‌ها</span>
+      </div>
+    </div>
+
+    <!-- بخش افشاها (کاملاً خالی) -->
+    <div class="revelations" id="revelationList">
+      <div class="empty-list">
+        <span class="big-icon">📭</span>
+        هیچ افشایی ثبت نشده است
+        <br>
+        <span style="font-size:0.7rem;opacity:0.5;">برای افزودن، به بخش مدیریت مراجعه کنید</span>
+      </div>
+    </div>
+
+    <!-- دکمه غیرفعال (فقط نمایش) -->
+    <div class="btn-simple">➕ افزودن افشا (غیرفعال)</div>
+
+    <div class="footer">
+      <span>✦</span> داده‌ها خالی · منتظر به‌روزرسانی <span>✦</span>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // همه چیز خالی و ساده
+      const searchInput = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
+
+      // آمارها (همه صفر)
+      const countPeople = document.getElementById('countPeople');
+      const countTeams = document.getElementById('countTeams');
+      const countBanks = document.getElementById('countBanks');
+      const countUniversities = document.getElementById('countUniversities');
+
+      // تابع جستجو (چون چیزی نیست، فقط پیام می‌دهد)
+      function performSearch() {
+        const query = searchInput.value.trim();
+        if (query === '') {
+          // هیچ چیزی
+          return;
+        }
+        // چون لیست خالی است، پیامی در کنسول یا می‌توانیم نمایش دهیم
+        // اما برای سادگی، فقط یک افکت کوچک
+        searchBtn.style.color = '#ff66ff';
+        setTimeout(() => {
+          searchBtn.style.color = '#00ddff';
+        }, 300);
+      }
+
+      searchBtn.addEventListener('click', performSearch);
+      searchInput.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+          performSearch();
+        }
+      });
+
+      // اعداد صفر هستند
+      countPeople.textContent = '۰';
+      countTeams.textContent = '۰';
+      countBanks.textContent = '۰';
+      countUniversities.textContent = '۰';
+
+      // هیچ آیتمی در لیست نیست
+      // همه چیز خالی است
+    })();
+  </script>
+</body>
+</html>
