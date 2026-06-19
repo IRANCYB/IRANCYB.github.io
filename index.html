@@ -8,12 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             min-height: 100vh;
             background: #0b0b1a;
@@ -21,18 +16,8 @@
             padding: 1.5rem;
             background-image: radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.05) 0%, transparent 30%), radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.05) 0%, transparent 35%);
         }
-
-        .page {
-            display: none;
-            width: 100%;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .page.active {
-            display: block;
-        }
-
+        .page { display: none; width: 100%; max-width: 700px; margin: 0 auto; }
+        .page.active { display: block; }
         .card {
             width: 100%;
             background: rgba(12, 12, 35, 0.7);
@@ -46,448 +31,159 @@
             overflow: hidden;
             margin: 0 auto;
         }
-
         .card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
             background: conic-gradient(from 0deg at 50% 50%, transparent, rgba(0, 255, 255, 0.05), transparent, rgba(255, 0, 255, 0.05), transparent);
             animation: rotateGlow 25s linear infinite;
-            z-index: -1;
-            opacity: 0.3;
-            pointer-events: none;
+            z-index: -1; opacity: 0.3; pointer-events: none;
         }
-
         @keyframes rotateGlow {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
         h1 {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: #fff;
+            font-size: 2.2rem; font-weight: 900; color: #fff;
             text-shadow: 0 0 20px #00ffff, 0 0 40px #0055ff;
-            text-align: center;
-            margin-bottom: 0.3rem;
-            letter-spacing: 1px;
+            text-align: center; margin-bottom: 0.3rem; letter-spacing: 1px;
         }
-
         .sub {
-            text-align: center;
-            color: #8899cc;
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-            opacity: 0.7;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding-bottom: 1rem;
+            text-align: center; color: #8899cc; font-size: 0.95rem;
+            margin-bottom: 2rem; opacity: 0.7;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 1rem;
         }
-
         .search-box {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            background: rgba(0, 20, 30, 0.3);
-            border-radius: 2rem 0.5rem 2rem 0.5rem;
-            border: 1px solid rgba(0, 255, 255, 0.12);
-            transition: all 0.3s ease;
-            padding: 0 0.2rem;
+            margin-bottom: 1rem; display: flex; align-items: center;
+            background: rgba(0, 20, 30, 0.3); border-radius: 2rem 0.5rem 2rem 0.5rem;
+            border: 1px solid rgba(0, 255, 255, 0.12); transition: all 0.3s ease; padding: 0 0.2rem;
         }
-
-        .search-box:focus-within {
-            border-color: #ff00ff;
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.1);
-        }
-
+        .search-box:focus-within { border-color: #ff00ff; box-shadow: 0 0 30px rgba(255, 0, 255, 0.1); }
         .search-box input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 0.9rem 1.2rem;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 1rem;
-            color: #d0ddff;
-            outline: none;
+            flex: 1; background: transparent; border: none; padding: 0.9rem 1.2rem;
+            font-family: 'Vazirmatn', sans-serif; font-size: 1rem; color: #d0ddff; outline: none;
         }
-
-        .search-box input::placeholder {
-            color: rgba(150, 170, 220, 0.3);
-        }
-
+        .search-box input::placeholder { color: rgba(150, 170, 220, 0.3); }
         .search-box button {
-            background: transparent;
-            border: none;
-            color: #00ddff;
-            font-size: 1.5rem;
-            padding: 0.5rem 1rem 0.5rem 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            background: transparent; border: none; color: #00ddff; font-size: 1.5rem;
+            padding: 0.5rem 1rem 0.5rem 0.5rem; cursor: pointer; transition: all 0.2s ease;
         }
-
-        .search-box button:hover {
-            color: #ff66ff;
-            transform: scale(1.1);
-        }
-
+        .search-box button:hover { color: #ff66ff; transform: scale(1.1); }
         .nav-purple-btn {
-            display: block;
-            width: 100%;
-            margin: 0 0 1.8rem 0;
-            background: linear-gradient(135deg, #6b21a8, #a855f7);
-            border: none;
-            border-radius: 2rem 0.5rem 2rem 0.5rem;
-            padding: 1rem 1.8rem;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #f5f3ff;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            display: block; width: 100%; margin: 0 0 1.8rem 0;
+            background: linear-gradient(135deg, #6b21a8, #a855f7); border: none;
+            border-radius: 2rem 0.5rem 2rem 0.5rem; padding: 1rem 1.8rem;
+            font-family: 'Vazirmatn', sans-serif; font-size: 1.1rem; font-weight: 700;
+            color: #f5f3ff; text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             box-shadow: 0 0 25px rgba(168, 85, 247, 0.5), 0 8px 20px rgba(107, 33, 168, 0.4);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 0.5px;
-            text-align: center;
-            backdrop-filter: blur(4px);
-            position: relative;
-            overflow: hidden;
+            cursor: pointer; transition: all 0.3s ease; letter-spacing: 0.5px;
+            text-align: center; backdrop-filter: blur(4px); position: relative; overflow: hidden;
         }
-
         .nav-purple-btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
             transition: left 0.5s ease;
         }
-
         .nav-purple-btn:hover {
             background: linear-gradient(135deg, #7e22ce, #c084fc);
             box-shadow: 0 0 40px rgba(192, 132, 252, 0.7), 0 8px 25px rgba(107, 33, 168, 0.6);
-            transform: translateY(-2px);
-            color: #fff;
+            transform: translateY(-2px); color: #fff;
         }
-
-        .nav-purple-btn:hover::after {
-            left: 100%;
-        }
-
-        .nav-purple-btn:active {
-            transform: scale(0.97);
-        }
-
-        .contact-select-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.8rem;
-            margin-bottom: 1.8rem;
-        }
-
+        .nav-purple-btn:hover::after { left: 100%; }
+        .nav-purple-btn:active { transform: scale(0.97); }
+        .contact-select-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-bottom: 1.8rem; }
         .contact-select-btn {
             background: linear-gradient(135deg, #4a1d6a, #7e22ce);
-            border: 1px solid rgba(168, 85, 247, 0.4);
-            border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
-            padding: 1rem 0.5rem;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #e0d0ff;
-            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
-            box-shadow: 0 0 15px rgba(126, 34, 206, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
-            position: relative;
-            overflow: hidden;
+            border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
+            padding: 1rem 0.5rem; font-family: 'Vazirmatn', sans-serif; font-size: 1rem; font-weight: 700;
+            color: #e0d0ff; text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+            box-shadow: 0 0 15px rgba(126, 34, 206, 0.3); cursor: pointer; transition: all 0.3s ease;
+            backdrop-filter: blur(4px); position: relative; overflow: hidden;
         }
-
         .contact-select-btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
             transition: left 0.5s ease;
         }
-
         .contact-select-btn:hover {
-            background: linear-gradient(135deg, #6b21a8, #a855f7);
-            border-color: #c084fc;
-            box-shadow: 0 0 25px rgba(192, 132, 252, 0.5);
-            color: #fff;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #6b21a8, #a855f7); border-color: #c084fc;
+            box-shadow: 0 0 25px rgba(192, 132, 252, 0.5); color: #fff; transform: translateY(-2px);
         }
-
-        .contact-select-btn:hover::after {
-            left: 100%;
-        }
-
-        .contact-select-btn:active {
-            transform: scale(0.95);
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.8rem;
-            margin-bottom: 2rem;
-        }
-
+        .contact-select-btn:hover::after { left: 100%; }
+        .contact-select-btn:active { transform: scale(0.95); }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-bottom: 2rem; }
         .stat-item {
-            background: rgba(10, 10, 30, 0.4);
-            border-radius: 1.2rem 0.3rem 1.2rem 0.3rem;
-            padding: 0.8rem 0.3rem;
-            text-align: center;
-            border: 1px solid rgba(0, 255, 255, 0.06);
+            background: rgba(10, 10, 30, 0.4); border-radius: 1.2rem 0.3rem 1.2rem 0.3rem;
+            padding: 0.8rem 0.3rem; text-align: center; border: 1px solid rgba(0, 255, 255, 0.06);
             transition: all 0.2s ease;
         }
-
-        .stat-item:hover {
-            border-color: rgba(255, 0, 255, 0.15);
-            background: rgba(20, 0, 40, 0.3);
-        }
-
-        .stat-item .number {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #fff;
-            text-shadow: 0 0 20px #00ffff;
-            display: block;
-            line-height: 1.2;
-        }
-
-        .stat-item .label {
-            font-size: 0.7rem;
-            color: #8899cc;
-            opacity: 0.7;
-            letter-spacing: 0.5px;
-        }
-
+        .stat-item:hover { border-color: rgba(255, 0, 255, 0.15); background: rgba(20, 0, 40, 0.3); }
+        .stat-item .number { font-size: 1.8rem; font-weight: 900; color: #fff; text-shadow: 0 0 20px #00ffff; display: block; line-height: 1.2; }
+        .stat-item .label { font-size: 0.7rem; color: #8899cc; opacity: 0.7; letter-spacing: 0.5px; }
         .revelation-item {
-            background: rgba(10, 10, 30, 0.5);
-            border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(0, 255, 255, 0.08);
+            background: rgba(10, 10, 30, 0.5); border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
+            padding: 1.5rem; margin-bottom: 1rem; border: 1px solid rgba(0, 255, 255, 0.08);
             transition: all 0.3s ease;
         }
-
-        .revelation-item:hover {
-            border-color: rgba(255, 0, 255, 0.15);
-            background: rgba(20, 0, 40, 0.3);
-        }
-
-        .revelation-item .person-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 0 20px #00ffff;
-            margin-bottom: 0.5rem;
-        }
-
-        .revelation-item .person-detail {
-            color: #8899cc;
-            font-size: 0.9rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .revelation-item .person-detail strong {
-            color: #00ddff;
-        }
-
-        .revelation-item .person-image {
-            margin-top: 1rem;
-            border-radius: 1rem;
-            overflow: hidden;
-            border: 1px solid rgba(0, 255, 255, 0.1);
-        }
-
-        .revelation-item .person-image img {
-            width: 100%;
-            max-height: 420px;
-            object-fit: cover;
-            display: block;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .revelation-item .person-image img:hover {
-            opacity: 0.85;
-            transform: scale(1.01);
-        }
-
-        .revelation-item .person-image a {
-            display: block;
-            text-decoration: none;
-        }
-
+        .revelation-item:hover { border-color: rgba(255, 0, 255, 0.15); background: rgba(20, 0, 40, 0.3); }
+        .revelation-item .person-name { font-size: 1.3rem; font-weight: 700; color: #fff; text-shadow: 0 0 20px #00ffff; margin-bottom: 0.5rem; }
+        .revelation-item .person-detail { color: #8899cc; font-size: 0.9rem; margin-bottom: 0.3rem; }
+        .revelation-item .person-detail strong { color: #00ddff; }
+        .revelation-item .person-image { margin-top: 1rem; border-radius: 1rem; overflow: hidden; border: 1px solid rgba(0, 255, 255, 0.1); }
+        .revelation-item .person-image img { width: 100%; max-height: 420px; object-fit: cover; display: block; cursor: pointer; transition: all 0.3s ease; }
+        .revelation-item .person-image img:hover { opacity: 0.85; transform: scale(1.01); }
+        .revelation-item .person-image a { display: block; text-decoration: none; }
         .revelation-item .update-note {
-            margin-top: 0.8rem;
-            color: #ff66ff;
-            font-size: 0.85rem;
-            text-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 0.8rem;
+            margin-top: 0.8rem; color: #ff66ff; font-size: 0.85rem;
+            text-shadow: 0 0 20px rgba(255, 0, 255, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 0.8rem;
         }
-
-        .image-error {
-            padding: 2rem;
-            color: #556688;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 1rem;
-        }
-
+        .image-error { padding: 2rem; color: #556688; text-align: center; background: rgba(0, 0, 0, 0.3); border-radius: 1rem; }
         .back-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #d0ddff;
-            padding: 0.7rem 1.8rem;
-            border-radius: 2rem;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #d0ddff; padding: 0.7rem 1.8rem; border-radius: 2rem;
+            font-family: 'Vazirmatn', sans-serif; font-size: 0.95rem; margin-bottom: 1.5rem;
+            cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.4rem;
         }
-
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #ff66ff;
-            color: #fff;
-        }
-
+        .back-btn:hover { background: rgba(255,255,255,0.1); border-color: #ff66ff; color: #fff; }
         .btn-simple {
-            display: block;
-            width: 100%;
-            background: transparent;
-            border: 1px solid rgba(0, 255, 255, 0.1);
-            color: rgba(150, 170, 220, 0.3);
-            padding: 0.7rem;
-            border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
-            margin-top: 1.2rem;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 0.85rem;
-            cursor: default;
-            transition: all 0.2s ease;
-            text-align: center;
+            display: block; width: 100%; background: transparent;
+            border: 1px solid rgba(0, 255, 255, 0.1); color: rgba(150, 170, 220, 0.3);
+            padding: 0.7rem; border-radius: 1.5rem 0.3rem 1.5rem 0.3rem; margin-top: 1.2rem;
+            font-family: 'Vazirmatn', sans-serif; font-size: 0.85rem; cursor: default;
+            transition: all 0.2s ease; text-align: center;
         }
-
-        .btn-simple:hover {
-            border-color: rgba(255, 0, 255, 0.1);
-            color: rgba(150, 170, 220, 0.5);
-        }
-
+        .btn-simple:hover { border-color: rgba(255, 0, 255, 0.1); color: rgba(150, 170, 220, 0.5); }
         .footer {
-            text-align: center;
-            margin-top: 1.8rem;
-            font-size: 0.7rem;
-            color: rgba(150, 170, 220, 0.15);
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-            padding-top: 1.2rem;
-            letter-spacing: 0.5px;
+            text-align: center; margin-top: 1.8rem; font-size: 0.7rem;
+            color: rgba(150, 170, 220, 0.15); border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-top: 1.2rem; letter-spacing: 0.5px;
         }
-
         .contact-item {
-            background: rgba(10, 10, 30, 0.5);
-            border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
-            padding: 1.2rem;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(168, 85, 247, 0.2);
+            background: rgba(10, 10, 30, 0.5); border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
+            padding: 1.2rem; margin-bottom: 1rem; border: 1px solid rgba(168, 85, 247, 0.2);
             transition: all 0.3s ease;
         }
-
-        .contact-item:hover {
-            border-color: rgba(255, 0, 255, 0.25);
-            background: rgba(30, 10, 50, 0.5);
-        }
-
-        .contact-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 0 15px #a855f7;
-        }
-
-        .contact-relation {
-            color: #c084fc;
-            font-size: 0.85rem;
-            margin-top: 0.2rem;
-        }
-
-        .contact-ip {
-            color: #7f8c8d;
-            font-size: 0.8rem;
-            margin-top: 0.2rem;
-            direction: ltr;
-            text-align: right;
-        }
-
-        .contact-tel {
-            display: inline-block;
-            color: #00ddff;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-
-        .contact-tel:hover {
-            color: #ff66ff;
-            text-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
-        }
-
+        .contact-item:hover { border-color: rgba(255, 0, 255, 0.25); background: rgba(30, 10, 50, 0.5); }
+        .contact-name { font-size: 1.2rem; font-weight: 700; color: #fff; text-shadow: 0 0 15px #a855f7; }
+        .contact-relation { color: #c084fc; font-size: 0.85rem; margin-top: 0.2rem; }
+        .contact-ip { color: #7f8c8d; font-size: 0.8rem; margin-top: 0.2rem; direction: ltr; text-align: right; }
+        .contact-tel { display: inline-block; color: #00ddff; text-decoration: none; font-size: 0.9rem; transition: all 0.2s ease; }
+        .contact-tel:hover { color: #ff66ff; text-shadow: 0 0 10px rgba(255, 0, 255, 0.4); }
         @media (max-width: 480px) {
-            .card {
-                padding: 1.8rem 1.2rem;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.6rem;
-            }
-
-            .stat-item .number {
-                font-size: 1.4rem;
-            }
-
-            .revelation-item .person-image img {
-                max-height: 280px;
-            }
-
-            .nav-purple-btn {
-                font-size: 1rem;
-                padding: 0.8rem 1.2rem;
-            }
-
-            .contact-select-buttons {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.4rem;
-            }
-
-            .contact-select-btn {
-                font-size: 0.85rem;
-                padding: 0.8rem 0.3rem;
-            }
+            .card { padding: 1.8rem 1.2rem; }
+            h1 { font-size: 1.8rem; }
+            .stats { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+            .stat-item .number { font-size: 1.4rem; }
+            .revelation-item .person-image img { max-height: 280px; }
+            .nav-purple-btn { font-size: 1rem; padding: 0.8rem 1.2rem; }
+            .contact-select-buttons { grid-template-columns: repeat(3, 1fr); gap: 0.4rem; }
+            .contact-select-btn { font-size: 0.85rem; padding: 0.8rem 0.3rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- صفحه اصلی -->
     <div id="mainPage" class="page active">
         <div class="card">
             <h1>🛩 افشاگری دزیآ</h1>
@@ -517,7 +213,7 @@
                             <img src="https://IRANCYB.github.io/Screenshot_20260618_234720_Gallery.jpg" alt="عکس علی خآوری" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-error\'>📷 عکس موجود نیست</div>';">
                         </a>
                     </div>
-                    <div class="update-note">افشا پایان یافت.</div>
+                    <div class="update-note">📌 اطلاعات بیشتر به‌زودی آپلود خواهد شد...</div>
                 </div>
                 <div class="revelation-item" data-search="ابوالفضل تنگ‌ارمی 09370663327">
                     <div class="person-name">👤 ابوالفضل تنگ‌ارمی</div>
@@ -528,11 +224,11 @@
                     <div class="person-detail"><strong>نام پدربزرگ:</strong> علی</div>
                     <div class="person-detail"><strong>سن:</strong> ۱۵ سال (متولد ۱۳۹۰)</div>
                     <div class="person-image">
-                        <a href="https://IRANCYB.github.io/Screenshot_20260619_205548_Gallery.jpg" target="_blank">
-                            <img src="https://IRANCYB.github.io/Screenshot_20260619_205548_Gallery.jpg" alt="عکس ابوالفضل تنگ‌ارمی" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-error\'>📷 عکس موجود نیست</div>';">
+                        <a href="https://IRANCYB.github.io/Screenshot_۲۰۲۶۰۶۱۹_۲۰۵۵۴۸_Gallery.jpg" target="_blank">
+                            <img src="https://IRANCYB.github.io/Screenshot_۲۰۲۶۰۶۱۹_۲۰۵۵۴۸_Gallery.jpg" alt="عکس ابوالفضل تنگ‌ارمی" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-error\'>📷 عکس موجود نیست</div>';">
                         </a>
                     </div>
-                    <div class="update-note">افشا پایان یافت.</div>
+                    <div class="update-note">📌 اطلاعات بیشتر به‌زودی آپلود خواهد شد...</div>
                 </div>
             </div>
             <div class="btn-simple">➕ افزودن افشا (غیرفعال)</div>
@@ -540,7 +236,6 @@
         </div>
     </div>
 
-    <!-- صفحه مخاطبین -->
     <div id="contactsPage" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('mainPage')">↩ بازگشت به صفحه اصلی</button>
@@ -555,7 +250,6 @@
         </div>
     </div>
 
-    <!-- صفحه دارکنس -->
     <div id="darknessContactsPage" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
@@ -607,7 +301,6 @@
         </div>
     </div>
 
-    <!-- صفحه تیفانی -->
     <div id="tiffanyContactsPage" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
@@ -652,7 +345,6 @@
         </div>
     </div>
 
-    <!-- صفحه نازی -->
     <div id="naziContactsPage" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
@@ -753,4 +445,4 @@
         })();
     </script>
 </body>
-                                                                                                               </html>
+</html>
