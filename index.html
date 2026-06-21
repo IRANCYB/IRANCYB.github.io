@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
+        /* تمام استایل‌های قبلی保持不变 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             min-height: 100vh;
@@ -154,64 +155,265 @@
             box-shadow: 0 0 35px rgba(0, 150, 255, 0.4);
         }
 
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-bottom: 2rem; }
-        .stat-item {
-            background: rgba(10, 10, 30, 0.4); border-radius: 1.2rem 0.3rem 1.2rem 0.3rem;
-            padding: 0.8rem 0.3rem; text-align: center; border: 1px solid rgba(0, 255, 255, 0.06);
+        /* ========== استایل جدید برای آمار ستونی و دکمه‌های ناوبری ========== */
+        .stats-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-item-vertical {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 30, 0.4);
+            border-radius: 1.2rem 0.3rem 1.2rem 0.3rem;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid rgba(0, 255, 255, 0.06);
             transition: all 0.2s ease;
         }
-        .stat-item:hover { border-color: rgba(255, 0, 255, 0.15); background: rgba(20, 0, 40, 0.3); }
-        .stat-item .number { font-size: 1.8rem; font-weight: 900; color: #fff; text-shadow: 0 0 20px #00ffff; display: block; line-height: 1.2; }
-        .stat-item .label { font-size: 0.7rem; color: #8899cc; opacity: 0.7; letter-spacing: 0.5px; }
+        .stat-item-vertical:hover {
+            border-color: rgba(255, 0, 255, 0.15);
+            background: rgba(20, 0, 40, 0.3);
+        }
+        .stat-item-vertical .number {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 20px #00ffff;
+        }
+        .stat-item-vertical .label {
+            font-size: 0.85rem;
+            color: #8899cc;
+            opacity: 0.8;
+        }
+
+        /* دکمه ناوبری آبی پررنگ - برای دیتابیس تیم‌های هکری */
+        .nav-blue-btn {
+            display: block;
+            width: 100%;
+            margin: 1rem 0 0 0;
+            background: linear-gradient(135deg, #0a4da4, #1a7ad4);
+            border: none;
+            border-radius: 2rem 0.5rem 2rem 0.5rem;
+            padding: 1rem 1.8rem;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 0 30px rgba(26, 122, 212, 0.5), 0 8px 20px rgba(10, 77, 164, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+        }
+        .nav-blue-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .nav-blue-btn:hover {
+            background: linear-gradient(135deg, #1a6bc4, #2a8ae4);
+            box-shadow: 0 0 50px rgba(42, 138, 228, 0.7), 0 8px 25px rgba(10, 77, 164, 0.6);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+        .nav-blue-btn:hover::after { left: 100%; }
+        .nav-blue-btn:active { transform: scale(0.97); }
+
+        /* دکمه‌های پروفایل افراد */
+        .profile-nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin: 1rem 0 1.5rem 0;
+        }
+        .profile-nav-btn {
+            display: block;
+            width: 100%;
+            background: rgba(10, 10, 30, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
+            padding: 0.8rem 1.2rem;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #d0ddff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+        .profile-nav-btn:hover {
+            background: rgba(20, 40, 80, 0.6);
+            border-color: rgba(0, 200, 255, 0.3);
+            color: #ffffff;
+            transform: translateX(-4px);
+            box-shadow: 0 0 25px rgba(0, 150, 255, 0.1);
+        }
+
         .revelation-item {
-            background: rgba(10, 10, 30, 0.5); border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
-            padding: 1.5rem; margin-bottom: 1rem; border: 1px solid rgba(0, 255, 255, 0.08);
+            background: rgba(10, 10, 30, 0.5);
+            border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0, 255, 255, 0.08);
             transition: all 0.3s ease;
         }
-        .revelation-item:hover { border-color: rgba(255, 0, 255, 0.15); background: rgba(20, 0, 40, 0.3); }
-        .revelation-item .person-name { font-size: 1.3rem; font-weight: 700; color: #fff; text-shadow: 0 0 20px #00ffff; margin-bottom: 0.5rem; }
-        .revelation-item .person-detail { color: #8899cc; font-size: 0.9rem; margin-bottom: 0.3rem; }
-        .revelation-item .person-detail strong { color: #00ddff; }
-        .revelation-item .person-image { margin-top: 1rem; border-radius: 1rem; overflow: hidden; border: 1px solid rgba(0, 255, 255, 0.1); }
-        .revelation-item .person-image img { width: 100%; max-height: 420px; object-fit: cover; display: block; cursor: pointer; transition: all 0.3s ease; }
-        .revelation-item .person-image img:hover { opacity: 0.85; transform: scale(1.01); }
-        .revelation-item .person-image a { display: block; text-decoration: none; }
+        .revelation-item:hover {
+            border-color: rgba(255, 0, 255, 0.15);
+            background: rgba(20, 0, 40, 0.3);
+        }
+        .revelation-item .person-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px #00ffff;
+            margin-bottom: 0.5rem;
+        }
+        .revelation-item .person-detail {
+            color: #8899cc;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        .revelation-item .person-detail strong {
+            color: #00ddff;
+        }
+        .revelation-item .person-image {
+            margin-top: 1rem;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        .revelation-item .person-image img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .revelation-item .person-image img:hover {
+            opacity: 0.85;
+            transform: scale(1.01);
+        }
+        .revelation-item .person-image a {
+            display: block;
+            text-decoration: none;
+        }
         .revelation-item .update-note {
-            margin-top: 0.8rem; color: #ff66ff; font-size: 0.85rem;
-            text-shadow: 0 0 20px rgba(255, 0, 255, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 0.8rem;
+            margin-top: 0.8rem;
+            color: #ff66ff;
+            font-size: 0.85rem;
+            text-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 0.8rem;
         }
-        .image-error { padding: 2rem; color: #556688; text-align: center; background: rgba(0, 0, 0, 0.3); border-radius: 1rem; }
+        .image-error {
+            padding: 2rem;
+            color: #556688;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+        }
         .back-btn {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #d0ddff; padding: 0.7rem 1.8rem; border-radius: 2rem;
-            font-family: 'Vazirmatn', sans-serif; font-size: 0.95rem; margin-bottom: 1.5rem;
-            cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #d0ddff;
+            padding: 0.7rem 1.8rem;
+            border-radius: 2rem;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
         }
-        .back-btn:hover { background: rgba(255,255,255,0.1); border-color: #ff66ff; color: #fff; }
+        .back-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #ff66ff;
+            color: #fff;
+        }
         .btn-simple {
-            display: block; width: 100%; background: transparent;
-            border: 1px solid rgba(0, 255, 255, 0.1); color: rgba(150, 170, 220, 0.3);
-            padding: 0.7rem; border-radius: 1.5rem 0.3rem 1.5rem 0.3rem; margin-top: 1.2rem;
-            font-family: 'Vazirmatn', sans-serif; font-size: 0.85rem; cursor: default;
-            transition: all 0.2s ease; text-align: center;
+            display: block;
+            width: 100%;
+            background: transparent;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            color: rgba(150, 170, 220, 0.3);
+            padding: 0.7rem;
+            border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
+            margin-top: 1.2rem;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.85rem;
+            cursor: default;
+            transition: all 0.2s ease;
+            text-align: center;
         }
-        .btn-simple:hover { border-color: rgba(255, 0, 255, 0.1); color: rgba(150, 170, 220, 0.5); }
+        .btn-simple:hover {
+            border-color: rgba(255, 0, 255, 0.1);
+            color: rgba(150, 170, 220, 0.5);
+        }
         .footer {
-            text-align: center; margin-top: 1.8rem; font-size: 0.7rem;
-            color: rgba(150, 170, 220, 0.15); border-top: 1px solid rgba(255, 255, 255, 0.03);
-            padding-top: 1.2rem; letter-spacing: 0.5px;
+            text-align: center;
+            margin-top: 1.8rem;
+            font-size: 0.7rem;
+            color: rgba(150, 170, 220, 0.15);
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-top: 1.2rem;
+            letter-spacing: 0.5px;
         }
         .contact-item {
-            background: rgba(10, 10, 30, 0.5); border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
-            padding: 1.2rem; margin-bottom: 1rem; border: 1px solid rgba(168, 85, 247, 0.2);
+            background: rgba(10, 10, 30, 0.5);
+            border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(168, 85, 247, 0.2);
             transition: all 0.3s ease;
         }
-        .contact-item:hover { border-color: rgba(255, 0, 255, 0.25); background: rgba(30, 10, 50, 0.5); }
-        .contact-name { font-size: 1.2rem; font-weight: 700; color: #fff; text-shadow: 0 0 15px #a855f7; }
-        .contact-relation { color: #c084fc; font-size: 0.85rem; margin-top: 0.2rem; }
-        .contact-ip { color: #7f8c8d; font-size: 0.8rem; margin-top: 0.2rem; direction: ltr; text-align: right; }
-        .contact-tel { display: inline-block; color: #00ddff; text-decoration: none; font-size: 0.9rem; transition: all 0.2s ease; }
-        .contact-tel:hover { color: #ff66ff; text-shadow: 0 0 10px rgba(255, 0, 255, 0.4); }
+        .contact-item:hover {
+            border-color: rgba(255, 0, 255, 0.25);
+            background: rgba(30, 10, 50, 0.5);
+        }
+        .contact-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 15px #a855f7;
+        }
+        .contact-relation {
+            color: #c084fc;
+            font-size: 0.85rem;
+            margin-top: 0.2rem;
+        }
+        .contact-ip {
+            color: #7f8c8d;
+            font-size: 0.8rem;
+            margin-top: 0.2rem;
+            direction: ltr;
+            text-align: right;
+        }
+        .contact-tel {
+            display: inline-block;
+            color: #00ddff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        .contact-tel:hover {
+            color: #ff66ff;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
+        }
 
         /* استایل مخصوص توماس شلبی */
         .thomas-header {
@@ -269,764 +471,1390 @@
             text-shadow: 0 0 10px rgba(0, 255, 200, 0.4) !important;
         }
 
+        /* استایل مخصوص بخش اعضا (فرم‌ها) */
+        .members-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .member-card {
+            background: rgba(18, 24, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 22px;
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ffd700, #ff6b35, #ffd700, transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .member-card:hover::before { opacity: 1; }
+        .member-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: rgba(255, 215, 0, 0.25);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.05);
+            background: rgba(22, 30, 50, 0.8);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+        }
+        .card-header .nickname {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-header .member-number {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #8899bb;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+        .copy-btn:hover {
+            background: rgba(255, 215, 0, 0.12);
+            border-color: rgba(255, 215, 0, 0.3);
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+        .copy-btn.copied {
+            background: rgba(74, 222, 128, 0.15);
+            border-color: rgba(74, 222, 128, 0.3);
+            color: #4ade80;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .info-section.full-width { grid-column: 1 / -1; }
+        .info-label {
+            font-size: 0.7rem;
+            color: #667799;
+            display: block;
+            margin-bottom: 2px;
+            letter-spacing: 1px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        .info-value {
+            font-size: 0.9rem;
+            color: #d0d8e8;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            word-break: break-word;
+        }
+        .info-value.lg {
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 8px 14px;
+            background: rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.1);
+        }
+        .info-value .badge-id {
+            color: #77aaff;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            direction: ltr;
+            display: inline-block;
+        }
+        .extra-qa {
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+        .qa-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            text-align: center;
+        }
+        .qa-item .q {
+            font-size: 0.65rem;
+            color: #667799;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .qa-item .a { font-size: 0.85rem; font-weight: 600; }
+        .interest-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .interest-badge.yes { background: rgba(74, 222, 128, 0.12); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.15); }
+        .interest-badge.low { background: rgba(251, 191, 36, 0.12); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.15); }
+        .interest-badge.no  { background: rgba(248, 113, 113, 0.1); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.12); }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(255, 215, 0, 0.05));
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 8px 22px;
+            border-radius: 50px;
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 0.85rem;
+            backdrop-filter: blur(4px);
+        }
+        .forms-section {
+            background: rgba(20, 27, 45, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            text-align: center;
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .targets-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .target-btn {
+            background: linear-gradient(135deg, rgba(255, 100, 50, 0.9), rgba(255, 50, 50, 0.8));
+            border: none;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 50, 50, 0.4);
+            backdrop-filter: blur(4px);
+        }
+        .target-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(255, 80, 80, 0.8);
+            background: linear-gradient(135deg, #ff6a3d, #ff3a3a);
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: rgba(74, 222, 128, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+            padding: 12px 30px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9999;
+            pointer-events: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ========== منوی ناوبری بنفش ========== */
+        .nav-menu-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: linear-gradient(135deg, #6b21a8, #a855f7);
+            border: none;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.5);
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        .nav-menu-btn:hover {
+            background: linear-gradient(135deg, #7e22ce, #c084fc);
+            transform: scale(1.05);
+            box-shadow: 0 4px 25px rgba(168, 85, 247, 0.7);
+        }
+        .nav-dropdown {
+            position: fixed;
+            top: 75px;
+            right: 20px;
+            z-index: 9999;
+            background: rgba(20, 27, 45, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 16px;
+            padding: 10px 5px;
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .nav-dropdown.open {
+            display: flex;
+        }
+        .nav-dropdown a {
+            display: block;
+            padding: 10px 20px;
+            color: #c084fc;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: 0.2s;
+            font-size: 0.95rem;
+            text-align: right;
+        }
+        .nav-dropdown a:hover {
+            background: rgba(168, 85, 247, 0.15);
+            color: #fff;
+        }
+
+        /* استایل دکمه‌های تیم‌های هکری در صفحه انتخاب */
+        .team-select-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+            margin-bottom: 1.8rem;
+        }
+        .team-select-btn {
+            background: linear-gradient(135deg, #0a4da4, #1a7ad4);
+            border: 1px solid rgba(26, 122, 212, 0.4);
+            border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
+            padding: 1.2rem 0.5rem;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 0 20px rgba(26, 122, 212, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .team-select-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s ease;
+        }
+        .team-select-btn:hover {
+            background: linear-gradient(135deg, #1a6bc4, #2a8ae4);
+            border-color: rgba(42, 138, 228, 0.6);
+            box-shadow: 0 0 35px rgba(42, 138, 228, 0.5);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+        .team-select-btn:hover::after { left: 100%; }
+        .team-select-btn:active { transform: scale(0.95); }
+
+        /* استایل صفحه جزئیات تیم */
+        .team-detail-card {
+            background: rgba(10, 10, 30, 0.5);
+            border-radius: 1.5rem 0.3rem 1.5rem 0.3rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(26, 122, 212, 0.2);
+            transition: all 0.3s ease;
+        }
+        .team-detail-card:hover {
+            border-color: rgba(42, 138, 228, 0.4);
+            background: rgba(20, 30, 60, 0.5);
+        }
+        .team-detail-card .team-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px #1a7ad4;
+            margin-bottom: 0.8rem;
+        }
+        .team-detail-card .team-info {
+            color: #8899cc;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+        .team-detail-card .team-info strong {
+            color: #66ddff;
+        }
+        .member-list {
+            margin-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1rem;
+        }
+        .member-list .member-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1rem;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .member-list .member-item .m-name {
+            color: #d0d8e8;
+            font-weight: 600;
+        }
+        .member-list .member-item .m-role {
+            color: #8899cc;
+            font-size: 0.8rem;
+        }
+        .member-list .member-item .m-phone {
+            color: #66ddff;
+            font-size: 0.85rem;
+            direction: ltr;
+            display: inline-block;
+        }
+
         @media (max-width: 480px) {
             .card { padding: 1.8rem 1.2rem; }
             h1 { font-size: 1.8rem; }
-            .stats { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
-            .stat-item .number { font-size: 1.4rem; }
+            .stat-item-vertical .number { font-size: 1.3rem; }
             .revelation-item .person-image img { max-height: 280px; }
             .nav-purple-btn { font-size: 1rem; padding: 0.8rem 1.2rem; }
             .nav-thomas-btn { font-size: 1rem; padding: 0.8rem 1.2rem; }
             .contact-select-buttons { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
             .contact-select-btn { font-size: 0.8rem; padding: 0.8rem 0.3rem; }
+            .info-grid { grid-template-columns: 1fr; }
+            .extra-qa { grid-template-columns: 1fr; }
+            .member-card { padding: 20px; }
+            .nav-menu-btn {
+                top: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.3rem;
+            }
+            .nav-dropdown {
+                top: 60px;
+                right: 10px;
+            }
+            .team-select-buttons {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ==================== صفحه اصلی ==================== -->
-    <div id="mainPage" class="page active">
-        <div class="card">
-            <h1>🛩 ایران سآیب</h1>
-            <div class="sub">آمار و جستجو</div>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="جستجو ...">
-                <button id="searchBtn" aria-label="جستجو">🔍</button>
-            </div>
-            <button class="nav-purple-btn" onclick="switchPage('contactsPage')">✨ ورود به بخش مخاطبین ✨</button>
-            <div class="stats">
-                <div class="stat-item"><span class="number" id="countPeople">۳</span><span class="label">افراد</span></div>
-                <div class="stat-item"><span class="number" id="countTeams">۰</span><span class="label">تیم‌های هکری</span></div>
-                <div class="stat-item"><span class="number" id="countBanks">۰</span><span class="label">بانک‌ها</span></div>
-                <div class="stat-item"><span class="number" id="countUniversities">۰</span><span class="label">دانشگاه‌ها</span></div>
-            </div>
-            <div id="revelationList">
-                <div class="revelation-item" data-search="علی خآوری 09036151894">
-                    <div class="person-name">👤 علی خآوری</div>
-                    <div class="person-detail"><strong>شماره تلفن:</strong> <a href="tel:09036151894" class="contact-tel">۰۹۰۳۶۱۵۱۸۹۴</a></div>
-                    <div class="person-detail"><strong>وضعیت:</strong> افشا شده</div>
-                    <div class="person-detail"><strong>نام پدر:</strong> غلام خآوری</div>
-                    <div class="person-detail"><strong>نام مادربزرگ:</strong> سوگل</div>
-                    <div class="person-detail"><strong>نام پدربزرگ:</strong> عباس</div>
-                    <div class="person-detail"><strong>سن:</strong> ۱۵ سال (متولد ۱۳۹۰)</div>
-                    <div class="person-image">
-                        <a href="https://IRANCYB.github.io/Screenshot_۲۰۲۶۰۶۱۸_۲۳۴۷۲۰_Gallery.jpg" target="_blank">
-                            <img src="https://IRANCYB.github.io/Screenshot_۲۰۲۶۰۶۱۸_۲۳۴۷۲۰_Gallery.jpg" alt="عکس علی خآوری" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-error\'>📷 عکس موجود نیست</div>';">
-                        </a>
-                    </div>
-                    <div class="update-note">📌 اطلاعات بیشتر به‌زودی آپلود خواهد شد...</div>
-                </div>
-                <div class="revelation-item" data-search="ابوالفضل تنگ‌ارمی 09370663327">
-                    <div class="person-name">👤 ابوالفضل تنگ‌ارمی</div>
-                    <div class="person-detail"><strong>شماره تلفن:</strong> <a href="tel:09370663327" class="contact-tel">۰۹۳۷۰۶۶۳۳۲۷</a></div>
-                    <div class="person-detail"><strong>وضعیت:</strong> افشا شده</div>
-                    <div class="person-detail"><strong>نام پدر:</strong> سهراب</div>
-                    <div class="person-detail"><strong>نام مادربزرگ:</strong> خدیجه</div>
-                    <div class="person-detail"><strong>نام پدربزرگ:</strong> علی</div>
-                    <div class="person-detail"><strong>سن:</strong> ۱۵ سال (متولد ۱۳۹۰)</div>
-                    <div class="person-image">
-                        <a href="https://IRANCYB.github.io/Screenshot_۲۰۲۶۰۶۱۹_۲۰۵۵۴۸_Gallery.jpg" target="_blank">
-                            <img src="https://IRANCYB.github.io/Screenshot_۲۰۲۶۰۶۱۹_۲۰۵۵۴۸_Gallery.jpg" alt="عکس ابوالفضل تنگ‌ارمی" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-error\'>📷 عکس موجود نیست</div>';">
-                        </a>
-                    </div>
-                    <div class="update-note">📌 اطلاعات بیشتر به‌زودی آپلود خواهد شد...</div>
-                </div>
-                <!-- ========== افشا جدید: مریم دولتی ایردموسی ========== -->
-                <div class="revelation-item" data-search="مریم دولتی ایردموسی +989381659609 09388628824 کدو">
-                    <div class="person-name">👤 مریم دولتی ایردموسی (کدو)</div>
-                    <div class="person-detail"><strong>شماره تلفن ۱:</strong> <a href="tel:+989381659609" class="contact-tel">+۹۸۹۳۸۱۶۵۹۶۰۹</a></div>
-                    <div class="person-detail"><strong>شماره تلفن ۲:</strong> <a href="tel:09388628824" class="contact-tel">۰۹۳۸۸۶۲۸۸۲۴</a></div>
-                    <div class="person-detail"><strong>ملقب به:</strong> کدو</div>
-                    <div class="person-detail"><strong>وضعیت:</strong> افشا شده</div>
-                    <div class="person-detail"><strong>نام پدر:</strong> بهمن</div>
-                    <div class="person-detail"><strong>نام مادر:</strong> فهیمه</div>
-                    <div class="person-detail"><strong>تاریخ تولد:</strong> ۲۱ / ۱۰ / ۱۳۸۹</div>
-                    <div class="person-image">
-                        <a href="https://IRANCYB.github.io/IMG_20260616_234511_854.jpg" target="_blank">
-                            <img src="https://IRANCYB.github.io/IMG_20260616_234511_854.jpg" alt="عکس مریم دولتی ایردموسی" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-error\'>📷 عکس موجود نیست</div>';">
-                        </a>
-                    </div>
-                    <div class="update-note">📌 اطلاعات بیشتر به‌زودی آپلود خواهد شد...</div>
-                </div>
-        <!-- ===================دقیق جای این خط   افشای بعدی رو باید بزارم       ==================== -->
-            </div>                    
-            <div class="btn-simple">➕ افزودن افشا (غیرفعال)</div>
-            <div class="footer"><span>✦</span> داده‌ها به‌روزرسانی شد <span>✦</span></div>
+<!-- ====================== منوی ناوبری (بنفش) ====================== -->
+<button class="nav-menu-btn" id="navMenuBtn" title="منو">☰</button>
+<div class="nav-dropdown" id="navDropdown">
+    <a href="#" id="navHome">🏠 خانه</a>
+    <a href="#" id="navContacts">📋 مخاطبین افراد</a>
+    <a href="#" id="navForms">👾 دیتابیس تیم‌های هکری</a>
+</div>
+
+<!-- ==================== صفحه اصلی ==================== -->
+<div id="mainPage" class="page active">
+    <div class="card">
+        <h1>🛩 ایران سآیبری</h1>
+        <div class="sub">آمار و جستجو</div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="جستجو ...">
+            <button id="searchBtn" aria-label="جستجو">🔍</button>
         </div>
-    </div>
+        <button class="nav-purple-btn" onclick="switchPage('contactsPage')">✨ ورود به بخش مخاطبین ✨</button>
 
-    <!-- ==================== بخش مخاطبین ==================== -->
-    <div id="contactsPage" class="page">
-        <div class="card">
-            <button class="back-btn" onclick="switchPage('mainPage')">↩ بازگشت به صفحه اصلی</button>
-            <h1 style="text-shadow: 0 0 20px #a855f7, 0 0 40px #7e22ce;">📇 مخاطبین</h1>
-            <div class="sub">انتخاب مخاطب مورد نظر</div>
-            <div class="contact-select-buttons">
-                <button class="contact-select-btn dark-blue" onclick="switchPage('darknessContactsPage')">🌑 دارکنس</button>
-                <button class="contact-select-btn dark-blue" onclick="switchPage('tiffanyContactsPage')">💎 تیفانی</button>
-                <button class="contact-select-btn dark-blue" onclick="switchPage('naziContactsPage')">👑 نازی</button>
-                <button class="contact-select-btn dark-blue" onclick="switchPage('thomasContactsPage')">☩⛧ توماس شلبی</button>
-                <button class="contact-select-btn dark-blue" onclick="switchPage('namiContactsPage')" style="grid-column: span 2; margin-top: 0.2rem;">🌟 نامی</button>
+        <!-- ========== آمار به صورت ستونی ========== -->
+        <div class="stats-vertical">
+            <div class="stat-item-vertical">
+                <span class="label">👤 افراد</span>
+                <span class="number" id="countPeople">۳</span>
             </div>
-            <div class="footer"><span>✦</span> لطفاً یکی از مخاطبین را انتخاب کنید <span>✦</span></div>
+            <div class="stat-item-vertical">
+                <span class="label">🖥️ تیم‌های هکری</span>
+                <span class="number" id="countTeams">۱</span>
+            </div>
+            <div class="stat-item-vertical">
+                <span class="label">📲 مخاطبین </span>
+                <span class="number" id="countContacts">۵</span>
+            </div>
+            <div class="stat-item-vertical">
+                <span class="label">🎓 دانشگاه‌ها</span>
+                <span class="number" id="countUniversities">۰</span>
+            </div>
         </div>
-    </div>
 
-    <!-- ==================== دارکنس ==================== -->
-    <div id="darknessContactsPage" class="page">
-        <div class="card">
-            <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
-            <h1 style="text-shadow: 0 0 20px #ff4444, 0 0 40px #aa0000;">🌑 دارکنس</h1>
-            <div class="sub">مخاطبین امین‌رضا جعفری (دارکنس)</div>
-            <div class="search-box">
-                <input type="text" id="darknessSearchInput" placeholder="جستجو در مخاطبین دارکنس ...">
-                <button id="darknessSearchBtn" aria-label="جستجو">🔍</button>
-            </div>
-            <div id="darknessContactList">
-                <div class="contact-item" data-search="𝓓𝓪𝓷𝓲 𝓜𝓪𝓱𝓭𝓪𝓿𝓲 09034844114"><div class="contact-name">📌 𝓓𝓪𝓷𝓲 𝓜𝓪𝓱𝓭𝓪𝓿𝓲</div><div class="contact-relation">🚹 شماره: <a href="tel:09034844114" class="contact-tel">0903 484 4114</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="𝓜𝔂 𝓑𝓻𝓸𝓽𝓱𝓮𝓻 09103304601"><div class="contact-name">📌 𝓜𝔂 𝓑𝓻𝓸𝓽𝓱𝓮𝓻</div><div class="contact-relation">🚹 شماره: <a href="tel:09103304601" class="contact-tel">0910 330 4601</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Eli Fifi 09172730151"><div class="contact-name">📌 Eli Fifi</div><div class="contact-relation">🚹 شماره: <a href="tel:09172730151" class="contact-tel">0917 273 0151</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="𝓐𝓶𝓲𝓻 𝓜𝓪𝓱𝓭𝓲 𝓢𝓲𝓻𝓪𝔃𝓲 09172579315"><div class="contact-name">📌 𝓐𝓶𝓲𝓻 𝓜𝓪𝓱𝓭𝓲 𝓢𝓲𝓻𝓪𝔃𝓲</div><div class="contact-relation">🚹 شماره: <a href="tel:09172579315" class="contact-tel">0917 257 9315</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Abbas Zarafe 09910236584"><div class="contact-name">📌 Abbas Zarafe🦒</div><div class="contact-relation">🚹 شماره: <a href="tel:09910236584" class="contact-tel">0991 023 6584</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="کص خل دریای 09913571195"><div class="contact-name">📌 کص خل دریای</div><div class="contact-relation">🚹 شماره: <a href="tel:09913571195" class="contact-tel">0991 357 1195</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Mohsen Lalai 09966470883"><div class="contact-name">📌 Mohsen Lalai</div><div class="contact-relation">🚹 شماره: <a href="tel:09966470883" class="contact-tel">0996 647 0883</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Mohsn Tof Tof 09966970883"><div class="contact-name">📌 Mohsn Tof Tof</div><div class="contact-relation">🚹 شماره: <a href="tel:09966970883" class="contact-tel">09966970883</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Kakey Homan +989179713860"><div class="contact-name">📌 Kakey Homan</div><div class="contact-relation">🚹 شماره: <a href="tel:+989179713860" class="contact-tel">+98 917 971 3860</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Ali اریشگر +989368156305"><div class="contact-name">📌 Ali اریشگر</div><div class="contact-relation">🚹 شماره: <a href="tel:+989368156305" class="contact-tel">+98 936 815 6305</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Mah Owzayesh +989378502086"><div class="contact-name">📌 Mah Owzayesh</div><div class="contact-relation">🚹 شماره: <a href="tel:+989378502086" class="contact-tel">+98 937 850 2086</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="𝓝𝓪𝓶𝓭𝓪𝓻 +989384543499"><div class="contact-name">📌 𝓝𝓪𝓶𝓭𝓪𝓻</div><div class="contact-relation">🚹 شماره: <a href="tel:+989384543499" class="contact-tel">+98 938 454 3499</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="亗𝓐𝓶𝓲𝓻 𝓗𝓸𝓼𝓲𝓷 𝓑𝓪𝓻𝔃𝓰𝓪𝓻𝓲 +989904032826"><div class="contact-name">📌 亗𝓐𝓶𝓲𝓻 𝓗𝓸𝓼𝓲𝓷 𝓑𝓪𝓻𝔃𝓰𝓪𝓻𝓲</div><div class="contact-relation">🚹 شماره: <a href="tel:+989904032826" class="contact-tel">+98 990 403 2826</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Khosro +989907553960"><div class="contact-name">📌 Khosro</div><div class="contact-relation">🚹 شماره: <a href="tel:+989907553960" class="contact-tel">+98 990 755 3960</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Sherani +989033014749"><div class="contact-name">📌 Sherani 🙉</div><div class="contact-relation">🚹 شماره: <a href="tel:+989033014749" class="contact-tel">+98 903 301 4749</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="꧁𝓓𝓪𝓭𝓭𝔂 +989173724630"><div class="contact-name">📌 ꧁𝓓𝓪𝓭𝓭𝔂</div><div class="contact-relation">🚹 شماره: <a href="tel:+989173724630" class="contact-tel">+98 917 372 4630</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Mohsan Tof Tof 2 +989109263931"><div class="contact-name">📌 Mohsan Tof Tof 2</div><div class="contact-relation">🚹 شماره: <a href="tel:+989109263931" class="contact-tel">+98 910 926 3931</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="𝓜𝓸𝓶 +989173754283"><div class="contact-name">📌 𝓜𝓸𝓶</div><div class="contact-relation">🚹 شماره: <a href="tel:+989173754283" class="contact-tel">+98 917 375 4283</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="حمید جعفری +989173724630"><div class="contact-name">📌 حمید جعفری</div><div class="contact-relation">🚹 شماره: <a href="tel:+989173724630" class="contact-tel">+989173724630</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Zizi Kholo +989937336683"><div class="contact-name">📌 Zizi Kholo</div><div class="contact-relation">🚹 شماره: <a href="tel:+989937336683" class="contact-tel">+98 993 733 6683</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="𝓜𝓸𝓱𝓪𝓭𝓼𝓮 +989926726251"><div class="contact-name">📌 𝓜𝓸𝓱𝓪𝓭𝓼𝓮</div><div class="contact-relation">🚹 شماره: <a href="tel:+989926726251" class="contact-tel">+98 992 672 6251</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Keshavarz Kangon Bargh Mashin +989176665931"><div class="contact-name">📌 Keshavarz Kangon Bargh Mashin</div><div class="contact-relation">🚹 شماره: <a href="tel:+989176665931" class="contact-tel">+989176665931</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="My Girl +989940400036"><div class="contact-name">📌 My Girl</div><div class="contact-relation">🚹 شماره: <a href="tel:+989940400036" class="contact-tel">+989940400036</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="ℳ𝒴ℊ𝒾𝓇ℓ +989940400036"><div class="contact-name">📌 ℳ𝒴ℊ𝒾𝓇ℓ</div><div class="contact-relation">🚹 شماره: <a href="tel:+989940400036" class="contact-tel">+989940400036</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="My girl +989940400036"><div class="contact-name">📌 My girl</div><div class="contact-relation">🚹 شماره: <a href="tel:+989940400036" class="contact-tel">+989940400036</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="حمید جعفری 09023912488"><div class="contact-name">📌 حمید جعفری</div><div class="contact-relation">🚹 شماره: <a href="tel:09023912488" class="contact-tel">09023912488</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Dani Mahdavi 09034844114"><div class="contact-name">📌 Dani Mahdavi</div><div class="contact-relation">🚹 شماره: <a href="tel:09034844114" class="contact-tel">09034844114</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Amir Hosine 09165404817"><div class="contact-name">📌 Amir Hosine</div><div class="contact-relation">🚹 شماره: <a href="tel:09165404817" class="contact-tel">0916 540 4817</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="حسین جقی 09910878529"><div class="contact-name">📌 حسین جقی</div><div class="contact-relation">🚹 شماره: <a href="tel:09910878529" class="contact-tel">0991 087 8529</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Abbas Baghbani 09937189816"><div class="contact-name">📌 Abbas Baghbani</div><div class="contact-relation">🚹 شماره: <a href="tel:09937189816" class="contact-tel">0993 718 9816</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="ℳ𝒴ℊ𝒾𝓇ℓ 09940400036"><div class="contact-name">📌 ℳ𝒴ℊ𝒾𝓇ℓ</div><div class="contact-relation">🚹 شماره: <a href="tel:09940400036" class="contact-tel">0994 040 0036</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Police 110"><div class="contact-name">📌 Police</div><div class="contact-relation">🚹 شماره: <a href="tel:110" class="contact-tel">110</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Reza Javid +989164975212"><div class="contact-name">📌 Reza Javid</div><div class="contact-relation">🚹 شماره: <a href="tel:+989164975212" class="contact-tel">+98 916 497 5212</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Babaei +989176674214"><div class="contact-name">📌 Babaei 🐑</div><div class="contact-relation">🚹 شماره: <a href="tel:+989176674214" class="contact-tel">+98 917 667 4214</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="206 +989924459910"><div class="contact-name">📌 206</div><div class="contact-relation">🚹 شماره: <a href="tel:+989924459910" class="contact-tel">+98 992 445 9910</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="Amir Hosin Barzgari +989904032826"><div class="contact-name">📌 Amir Hosin Barzgari</div><div class="contact-relation">🚹 شماره: <a href="tel:+989904032826" class="contact-tel">+989904032826</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-            </div>
-            <div class="footer"><span>✦</span> مخاطبین دارکنس <span>✦</span></div>
+        <!-- ========== دکمه ناوبری به دیتابیس تیم‌های هکری ========== -->
+        <button class="nav-blue-btn" onclick="switchPage('teamsPage')">⚔️ دیتابیس تیم‌های هکری</button>
+
+        <!-- ========== دکمه‌های پروفایل افراد ========== -->
+        <div class="profile-nav-buttons">
+            <button class="profile-nav-btn" onclick="scrollToPerson('علی خآوری')">👤 علی خآوری</button>
+            <button class="profile-nav-btn" onclick="scrollToPerson('ابوالفضل تنگ‌ارمی')">👤 ابوالفضل تنگ‌ارمی</button>
+            <button class="profile-nav-btn" onclick="scrollToPerson('مریم دولتی ایردموسی')">👤 کیدو (مریم)</button>
         </div>
-    </div>
 
-    <!-- ==================== تیفانی ==================== -->
-    <div id="tiffanyContactsPage" class="page">
-        <div class="card">
-            <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
-            <h1 style="text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493;">💎 تیفانی</h1>
-            <div class="sub">مخاطبین پریسا زارعی (تیفانی)</div>
-            <div class="search-box">
-                <input type="text" id="tiffanySearchInput" placeholder="جستجو در مخاطبین تیفانی ...">
-                <button id="tiffanySearchBtn" aria-label="جستجو">🔍</button>
+        <div id="revelationList">
+            <div class="revelation-item" id="person-علی خآوری" data-search="علی خآوری 09036151894">
+                <div class="person-name">👤 علی خآوری</div>
+                <div class="person-detail"><strong>شماره تلفن:</strong> <a href="tel:09036151894" class="contact-tel">۰۹۰۳۶۱۵۱۸۹۴</a></div>
+                <div class="person-detail"><strong>وضعیت:</strong> افشا شده</div>
+                <div class="person-detail"><strong>نام پدر:</strong> غلام خآوری</div>
+                <div class="person-detail"><strong>نام مادربزرگ:</strong> سوگل</div>
+                <div class="person-detail"><strong>نام پدربزرگ:</strong> عباس</div>
+                <div class="person-detail"><strong>سن:</strong> ۱۵ سال (متولد ۱۳۹۰)</div>
+                <div class="person-image">
+                    <a href="https://IRANCYB.github.io/Screenshot_۲۰۲۶۰۶۱۸_۲۳۴۷۲۰_Gallery.jpg" target="_blank">
+                        <img src="https://IRANCYB.github.io/Screenshot_۲۰۲۶۰۶۱۸_۲۳۴۷۲۰_Gallery.jpg" alt="عکس علی خآوری" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-error\'>📷 عکس موجود نیست</div>';">
+                    </a>
+                </div>
+                <div class="update-note">📌 اطلاعات بیشتر به‌زودی آپلود خواهد شد...</div>
             </div>
-            <div id="tiffanyContactList">
-                <div class="contact-item" data-search="💗💗☄️🌌حنا🥰 09927128767"><div class="contact-name">📌 💗💗☄️🌌حنا🥰</div><div class="contact-relation">🚹 شماره: <a href="tel:09927128767" class="contact-tel">09927128767</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="راضی 989300874640"><div class="contact-name">📌 راضی</div><div class="contact-relation">🚹 شماره: <a href="tel:989300874640" class="contact-tel">989300874640</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="😤😤😮‍💨😮‍💨👹بدبختی من😶‍🌫️😶‍🌫️ +989024469078"><div class="contact-name">📌 😤😤😮‍💨😮‍💨👹بدبختی من😶‍🌫️😶‍🌫️</div><div class="contact-relation">🚹 شماره: <a href="tel:+989024469078" class="contact-tel">+98 902 446 9078</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="رضا کلاف +989036106245"><div class="contact-name">📌 رضا کلاف</div><div class="contact-relation">🚹 شماره: <a href="tel:+989036106245" class="contact-tel">+98 903 610 6245</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="محمدرضا گلبینی +989175758196"><div class="contact-name">📌 محمدرضا گلبینی</div><div class="contact-relation">🚹 شماره: <a href="tel:+989175758196" class="contact-tel">+98 917 575 8196</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="سید رضا سجادی +989942913464"><div class="contact-name">📌 سید رضا سجادی</div><div class="contact-relation">🚹 شماره: <a href="tel:+989942913464" class="contact-tel">+989942913464</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="امیر علی +989945102462"><div class="contact-name">📌 امیر علی</div><div class="contact-relation">🚹 شماره: <a href="tel:+989945102462" class="contact-tel">+989945102462</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="🫀🫂خاله مریمم💋💋 09171743602"><div class="contact-name">📌 🫀🫂خاله مریمم💋💋</div><div class="contact-relation">🚹 شماره: <a href="tel:09171743602" class="contact-tel">0917 174 3602</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="دایی علی +989372723422"><div class="contact-name">📌 دایی علی</div><div class="contact-relation">🚹 شماره: <a href="tel:+989372723422" class="contact-tel">+98 937 272 3422</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="خاله معصومه +989373483622"><div class="contact-name">📌 خاله معصومه</div><div class="contact-relation">🚹 شماره: <a href="tel:+989373483622" class="contact-tel">+98 937 348 3622</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="💐🪷فاطمه زهرا سیسی🌷👸🏻 +989396182412"><div class="contact-name">📌 💐🪷فاطمه زهرا سیسی🌷👸🏻</div><div class="contact-relation">🚹 شماره: <a href="tel:+989396182412" class="contact-tel">+989396182412</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="علی آبپخش +989914237091"><div class="contact-name">📌 علی آبپخش</div><div class="contact-relation">🚹 شماره: <a href="tel:+989914237091" class="contact-tel">+989914237091</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="نرجس +989916844034"><div class="contact-name">📌 نرجس</div><div class="contact-relation">🚹 شماره: <a href="tel:+989916844034" class="contact-tel">+989916844034</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="متین حاجیلو +989916859947"><div class="contact-name">📌 متین حاجیلو</div><div class="contact-relation">🚹 شماره: <a href="tel:+989916859947" class="contact-tel">+989916859947</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="mahmadjavad +989919089421"><div class="contact-name">📌 mahmadjavad</div><div class="contact-relation">🚹 شماره: <a href="tel:+989919089421" class="contact-tel">+989919089421</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="🌃🌃نازی🤗 +989921899856"><div class="contact-name">📌 🌃🌃نازی🤗</div><div class="contact-relation">🚹 شماره: <a href="tel:+989921899856" class="contact-tel">+989921899856</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="بردستانی میاخلیفه +989928525143"><div class="contact-name">📌 بردستانی میاخلیفه</div><div class="contact-relation">🚹 شماره: <a href="tel:+989928525143" class="contact-tel">+989928525143</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="دایی ساپالار +989928809278"><div class="contact-name">📌 دایی ساپالار</div><div class="contact-relation">🚹 شماره: <a href="tel:+989928809278" class="contact-tel">+989928809278</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="جواد میو +989937504715"><div class="contact-name">📌 جواد میو</div><div class="contact-relation">🚹 شماره: <a href="tel:+989937504715" class="contact-tel">+989937504715</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="✨😺گربه😺✨ 09101551410"><div class="contact-name">📌 ✨😺گربه😺✨</div><div class="contact-relation">🚹 شماره: <a href="tel:09101551410" class="contact-tel">0910 155 1410</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="♥️🎀جیسون🎀♥️ 09117867680"><div class="contact-name">📌 ♥️🎀جیسون🎀♥️</div><div class="contact-relation">🚹 شماره: <a href="tel:09117867680" class="contact-tel">0911 786 7680</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="دختر عمه فاطمه 09176683410"><div class="contact-name">📌 دختر عمه فاطمه</div><div class="contact-relation">🚹 شماره: <a href="tel:09176683410" class="contact-tel">0917 668 3410</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="🫂عمه نصرت🌅 09176683409"><div class="contact-name">📌 🫂عمه نصرت🌅</div><div class="contact-relation">🚹 شماره: <a href="tel:09176683409" class="contact-tel">09176683409</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="امیر عباس 0920889072"><div class="contact-name">📌 امیر عباس</div><div class="contact-relation">🚹 شماره: <a href="tel:0920889072" class="contact-tel">0920 889 072</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="🌠یسنا 🪐 09336329664"><div class="contact-name">📌 🌠یسنا 🪐</div><div class="contact-relation">🚹 شماره: <a href="tel:09336329664" class="contact-tel">09336329664</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="اسکندری 09360118598"><div class="contact-name">📌 اسکندری</div><div class="contact-relation">🚹 شماره: <a href="tel:09360118598" class="contact-tel">09360118598</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="✨✨صدرا✨✨ 09370598767"><div class="contact-name">📌 ✨✨صدرا✨✨</div><div class="contact-relation">🚹 شماره: <a href="tel:09370598767" class="contact-tel">0937 059 8767</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="🤍🤍مامانی🤍🤍🌃 09378270223"><div class="contact-name">📌 🤍🤍مامانی🤍🤍🌃</div><div class="contact-relation">🚹 شماره: <a href="tel:09378270223" class="contact-tel">09378270223</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
-                <div class="contact-item" data-search="داش ممد 0939"><div class="contact-name">📌 داش ممد</div><div class="contact-relation">🚹 شماره: <a href="tel:0939" class="contact-tel">0939</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+
+            <div class="revelation-item" id="person-ابوالفضل تنگ‌ارمی" data-search="ابوالفضل تنگ‌ارمی 09370663327">
+                <div class="person-name">👤 ابوالفضل تنگ‌ارمی</div>
+                <div class="person-detail"><strong>شماره تلفن:</strong> <a href="tel:09370663327" class="contact-tel">۰۹۳۷۰۶۶۳۳۲۷</a></div>
+                <div class="person-detail"><strong>وضعیت:</strong> افشا شده</div>
+                <div class="person-detail"><strong>نام پدر:</strong> سهراب</div>
+                <div class="person-detail"><strong>نام مادربزرگ:</strong> خدیجه</div>
+                <div class="person-detail"><strong>نام پدربزرگ:</strong> علی</div>
+                <div class="person-detail"><strong>سن:</strong> ۱۵ سال (متولد ۱۳۹۰)</div>
+                <div class="person-image">
+                    <a href="https://IRANCYB.github.io/Screenshot_۲۰۲۶۰۶۱۹_۲۰۵۵۴۸_Gallery.jpg" target="_blank">
+                        <img src="https://IRANCYB.github.io/Screenshot_۲۰۲۶۰۶۱۹_۲۰۵۵۴۸_Gallery.jpg" alt="عکس ابوالفضل تنگ‌ارمی" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-error\'>📷 عکس موجود نیست</div>';">
+                    </a>
+                </div>
+                <div class="update-note">📌 اطلاعات بیشتر به‌زودی آپلود خواهد شد...</div>
             </div>
-            <div class="footer"><span>✦</span> مخاطبین تیفانی <span>✦</span></div>
+
+            <div class="revelation-item" id="person-مریم دولتی ایردموسی" data-search="مریم دولتی ایردموسی +989381659609 09388628824 کدو">
+                <div class="person-name">👤 مریم دولتی ایردموسی (کدو)</div>
+                <div class="person-detail"><strong>شماره تلفن ۱:</strong> <a href="tel:+989381659609" class="contact-tel">+۹۸۹۳۸۱۶۵۹۶۰۹</a></div>
+                <div class="person-detail"><strong>شماره تلفن ۲:</strong> <a href="tel:09388628824" class="contact-tel">۰۹۳۸۸۶۲۸۸۲۴</a></div>
+                <div class="person-detail"><strong>ملقب به:</strong> کدو</div>
+                <div class="person-detail"><strong>وضعیت:</strong> افشا شده</div>
+                <div class="person-detail"><strong>نام پدر:</strong> بهمن</div>
+                <div class="person-detail"><strong>نام مادر:</strong> فهیمه</div>
+                <div class="person-detail"><strong>تاریخ تولد:</strong> ۲۱ / ۱۰ / ۱۳۸۹</div>
+                <div class="person-image">
+                    <a href="https://IRANCYB.github.io/IMG_20260616_234511_854.jpg" target="_blank">
+                        <img src="https://IRANCYB.github.io/IMG_20260616_234511_854.jpg" alt="عکس مریم دولتی ایردموسی" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-error\'>📷 عکس موجود نیست</div>';">
+                    </a>
+                </div>
+                <div class="update-note">📌 اطلاعات بیشتر به‌زودی آپلود خواهد شد...</div>
+            </div>
         </div>
-    </div>
 
-    <!-- ==================== نازی ==================== -->
-    <div id="naziContactsPage" class="page">
-        <div class="card">
-            <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
-            <h1 style="text-shadow: 0 0 20px #ffd700, 0 0 40px #ff8c00;">👑 نازی</h1>
-            <div class="sub">مخاطبین نازنین افروز (نازی)</div>
-            <div class="search-box">
-                <input type="text" id="naziSearchInput" placeholder="جستجو در مخاطبین نازی ...">
-                <button id="naziSearchBtn" aria-label="جستجو">🔍</button>
-            </div>
-            <div id="naziContactList">
-                <div class="contact-item" data-search="باشگاه پالادیوم 09101616969"><div class="contact-name">📌 باشگاه پالادیوم</div><div class="contact-relation">🚹 شماره: <a href="tel:09101616969" class="contact-tel">0910 161 6969</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="مامان مهسا 09173694261"><div class="contact-name">📌 مامان مهسا</div><div class="contact-relation">🚹 شماره: <a href="tel:09173694261" class="contact-tel">0917 369 4261</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="وحید 09176952580"><div class="contact-name">📌 وحید</div><div class="contact-relation">🚹 شماره: <a href="tel:09176952580" class="contact-tel">0917 695 2580</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="مامان نیکا 09171606408"><div class="contact-name">📌 مامان نیکا</div><div class="contact-relation">🚹 شماره: <a href="tel:09171606408" class="contact-tel">0917 160 6408</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="سمیره 09164513813"><div class="contact-name">📌 سمیره</div><div class="contact-relation">🚹 شماره: <a href="tel:09164513813" class="contact-tel">0916 451 3813</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="ممد علی رفیق همیشگی 09172168543"><div class="contact-name">📌 ممد علی رفیق همیشگی</div><div class="contact-relation">🚹 شماره: <a href="tel:09172168543" class="contact-tel">0917 216 8543</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="خاله حکیمه 09177323714"><div class="contact-name">📌 خاله حکیمه</div><div class="contact-relation">🚹 شماره: <a href="tel:09177323714" class="contact-tel">0917 732 3714</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="کپی ۵ 09178694104"><div class="contact-name">📌 کپی ۵</div><div class="contact-relation">🚹 شماره: <a href="tel:09178694104" class="contact-tel">09178694104</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="حشمت نژاد 09179321395"><div class="contact-name">📌 حشمت نژاد</div><div class="contact-relation">🚹 شماره: <a href="tel:09179321395" class="contact-tel">09179321395</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="علی رجب 09173305447"><div class="contact-name">📌 علی رجب</div><div class="contact-relation">🚹 شماره: <a href="tel:09173305447" class="contact-tel">09173305447</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="کوثر توانایی 09302342376"><div class="contact-name">📌 کوثر توانایی</div><div class="contact-relation">🚹 شماره: <a href="tel:09302342376" class="contact-tel">0930 234 2376</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="عشقم رکسانا 09302631084"><div class="contact-name">📌 عشقم رکسانا</div><div class="contact-relation">🚹 شماره: <a href="tel:09302631084" class="contact-tel">0930 263 1084</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="طناز جنده 09303309524"><div class="contact-name">📌 طناز جنده</div><div class="contact-relation">🚹 شماره: <a href="tel:09303309524" class="contact-tel">0930 330 9524</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Yalda 22 09304773104"><div class="contact-name">📌 Yalda 22</div><div class="contact-relation">🚹 شماره: <a href="tel:09304773104" class="contact-tel">0930 477 3104</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="My wife 09306492349"><div class="contact-name">📌 My wife💕</div><div class="contact-relation">🚹 شماره: <a href="tel:09306492349" class="contact-tel">0930 649 2349</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Meti 09305983503"><div class="contact-name">📌 Meti</div><div class="contact-relation">🚹 شماره: <a href="tel:09305983503" class="contact-tel">0930 598 3503</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="آوید عموزاده 09333941033"><div class="contact-name">📌 آوید عموزاده</div><div class="contact-relation">🚹 شماره: <a href="tel:09333941033" class="contact-tel">0933 394 1033</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="افسانه موبایلی 09337330514"><div class="contact-name">📌 افسانه موبایلی</div><div class="contact-relation">🚹 شماره: <a href="tel:09337330514" class="contact-tel">0933 733 0514</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="ناهید جاسم 09365458082"><div class="contact-name">📌 ناهید جاسم</div><div class="contact-relation">🚹 شماره: <a href="tel:09365458082" class="contact-tel">0936 545 8082</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="نازنین زهرا افروز زادگان 09339669453"><div class="contact-name">📌 نازنین زهرا افروز زادگان</div><div class="contact-relation">🚹 شماره: <a href="tel:09339669453" class="contact-tel">0933 966 9453</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Zoha 09370518916"><div class="contact-name">📌 Zoha</div><div class="contact-relation">🚹 شماره: <a href="tel:09370518916" class="contact-tel">0937 051 8916</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="سمندون 09339669453"><div class="contact-name">📌 سمندون</div><div class="contact-relation">🚹 شماره: <a href="tel:09339669453" class="contact-tel">09339669453</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Aylin 09370737588"><div class="contact-name">📌 Aylin ♡</div><div class="contact-relation">🚹 شماره: <a href="tel:09370737588" class="contact-tel">0937 073 7588</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="طناز رحمان 09376420758"><div class="contact-name">📌 طناز رحمان</div><div class="contact-relation">🚹 شماره: <a href="tel:09376420758" class="contact-tel">0937 642 0758</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Parmin 09392509365"><div class="contact-name">📌 Parmin</div><div class="contact-relation">🚹 شماره: <a href="tel:09392509365" class="contact-tel">0939 250 9365</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="مهرشاد 09906730740"><div class="contact-name">📌 مهرشاد</div><div class="contact-relation">🚹 شماره: <a href="tel:09906730740" class="contact-tel">0990 673 0740</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="مهدی 09375240958"><div class="contact-name">📌 مهدی</div><div class="contact-relation">🚹 شماره: <a href="tel:09375240958" class="contact-tel">0937 524 0958</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Mobina 09907325464"><div class="contact-name">📌 Mobina</div><div class="contact-relation">🚹 شماره: <a href="tel:09907325464" class="contact-tel">0990 732 5464</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Sahar 09910193266"><div class="contact-name">📌 Sahar✨️🩵</div><div class="contact-relation">🚹 شماره: <a href="tel:09910193266" class="contact-tel">0991 019 3266</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Parisa 09930101592"><div class="contact-name">📌 Parisa</div><div class="contact-relation">🚹 شماره: <a href="tel:09930101592" class="contact-tel">0993 010 1592</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="طناز رحمان ۲ 09963124911"><div class="contact-name">📌 طناز رحمان ۲</div><div class="contact-relation">🚹 شماره: <a href="tel:09963124911" class="contact-tel">0996 312 4911</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Sana 09963900418"><div class="contact-name">📌 Sana</div><div class="contact-relation">🚹 شماره: <a href="tel:09963900418" class="contact-tel">0996 390 0418</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Health Emergency 115"><div class="contact-name">📌 Health Emergency</div><div class="contact-relation">🚹 شماره: <a href="tel:115" class="contact-tel">115</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Fire Station 125"><div class="contact-name">📌 Fire Station</div><div class="contact-relation">🚹 شماره: <a href="tel:125" class="contact-tel">125</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Police 110"><div class="contact-name">📌 Police</div><div class="contact-relation">🚹 شماره: <a href="tel:110" class="contact-tel">110</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="دیانا 09916977267"><div class="contact-name">📌 دیانا</div><div class="contact-relation">🚹 شماره: <a href="tel:09916977267" class="contact-tel">0991 697 7267</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="رمزپرونده 34670"><div class="contact-name">📌 رمزپرونده</div><div class="contact-relation">🚹 شماره: <a href="tel:34670" class="contact-tel">34670</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="شماره پرونده 9909980226100462"><div class="contact-name">📌 شماره پرونده</div><div class="contact-relation">🚹 شماره: <a href="tel:9909980226100462" class="contact-tel">9909980226100462</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Ghazal +989050171213"><div class="contact-name">📌 Ghazal</div><div class="contact-relation">🚹 شماره: <a href="tel:+989050171213" class="contact-tel">+98 905 017 1213</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Andia +989039179423"><div class="contact-name">📌 Andia</div><div class="contact-relation">🚹 شماره: <a href="tel:+989039179423" class="contact-tel">+98 903 917 9423</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="سویییت +989012361376"><div class="contact-name">📌 سویییت</div><div class="contact-relation">🚹 شماره: <a href="tel:+989012361376" class="contact-tel">+98 901 236 1376</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-                <div class="contact-item" data-search="Kfc +987633678488"><div class="contact-name">📌 Kfc</div><div class="contact-relation">🚹 شماره: <a href="tel:+987633678488" class="contact-tel">+98 76 3367 8488</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
-            </div>
-            <div class="footer"><span>✦</span> مخاطبین نازی <span>✦</span></div>
+        <div class="btn-simple">➕ افزودن افشا (غیرفعال)</div>
+        <div class="footer"><span>✦</span> داده‌ها در حال بروزرسانی ... <span>✦</span></div>
+    </div>
+</div>
+
+<!-- ==================== بخش مخاطبین ==================== -->
+<div id="contactsPage" class="page">
+    <div class="card">
+        <button class="back-btn" onclick="switchPage('mainPage')">↩ بازگشت به صفحه اصلی</button>
+        <h1 style="text-shadow: 0 0 20px #a855f7, 0 0 40px #7e22ce;">📇 مخاطبین</h1>
+        <div class="sub">انتخاب مخاطب مورد نظر</div>
+        <div class="contact-select-buttons">
+            <button class="contact-select-btn dark-blue" onclick="switchPage('darknessContactsPage')">🌑 دارکنس</button>
+            <button class="contact-select-btn dark-blue" onclick="switchPage('tiffanyContactsPage')">💎 تیفانی</button>
+            <button class="contact-select-btn dark-blue" onclick="switchPage('naziContactsPage')">👑 نازی</button>
+            <button class="contact-select-btn dark-blue" onclick="switchPage('thomasContactsPage')">☩⛧ توماس شلبی</button>
+            <button class="contact-select-btn dark-blue" onclick="switchPage('namiContactsPage')" style="grid-column: span 2; margin-top: 0.2rem;">🌟 نامی</button>
         </div>
+        <div class="footer"><span>✦</span> لطفاً یکی از مخاطبین را انتخاب کنید <span>✦</span></div>
     </div>
+</div>
 
-    <!-- ==================== توماس شلبی ==================== -->
-    <div id="thomasContactsPage" class="page">
-        <div class="card">
-            <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
-            <h1 class="thomas-header">Tomas Shelbi</h1></h1>
-            <div class="sub thomas-sub">مخاطبین توماس شلبی</div>
-            <div class="search-box">
-                <input type="text" id="thomasSearchInput" placeholder="جستجو در مخاطبین توماس شلبی ...">
-                <button id="thomasSearchBtn" aria-label="جستجو">🔍</button>
-            </div>
-            <div id="thomasContactList">
-                <div class="contact-item thomas-contact" data-search="Grandmother +989369946842">
-                    <div class="contact-name">📌 Grandmother 👵</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989369946842" class="contact-tel">+98 936 994 6842</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="امیر حسین زمانی +989040692566">
-                    <div class="contact-name">📌 امیر حسین زمانی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989040692566" class="contact-tel">+98 904 069 2566</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="عمه مهشید +989130709378">
-                    <div class="contact-name">📌 عمه مهشید</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989130709378" class="contact-tel">+98 913 070 9378</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="دوست کلاس زبان +989029321390">
-                    <div class="contact-name">📌 دوست کلاس زبان</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989029321390" class="contact-tel">+98 902 932 1390</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="ایران نژاد +989037375040">
-                    <div class="contact-name">📌 ایران نژاد</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989037375040" class="contact-tel">+98 903 737 5040</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="هم کلاسی زبان +989903411983">
-                    <div class="contact-name">📌 هم کلاسی زبان</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989903411983" class="contact-tel">+98 990 341 1983</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="متین +989934932966">
-                    <div class="contact-name">📌 متین</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989934932966" class="contact-tel">+98 993 493 2966</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="نیما سلیمانی +989938353479">
-                    <div class="contact-name">📌 نیما سلیمانی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989938353479" class="contact-tel">+98 993 835 3479</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="Taha +989942018511">
-                    <div class="contact-name">📌 Taha🧑</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989942018511" class="contact-tel">+98 994 201 8511</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="هم کلاسی زبان ۱۰۲ +989945165049">
-                    <div class="contact-name">📌 هم کلاسی زبان ۱۰۲</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989945165049" class="contact-tel">+98 994 516 5049</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="هم کلاسی زبان ۱۰۱ +989965281537">
-                    <div class="contact-name">📌 هم کلاسی زبان ۱۰۱</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989965281537" class="contact-tel">+98 996 528 1537</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="Friend +989966101656">
-                    <div class="contact-name">📌 Friend 🧡</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989966101656" class="contact-tel">+98 996 610 1656</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="معراج اندیشه +9866000500608">
-                    <div class="contact-name">📌 معراج اندیشه</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+9866000500608" class="contact-tel">+98 6600 0500 608</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="A Mehrdad Nazarieh +989133435567">
-                    <div class="contact-name">📌 A Mehrdad Nazarieh</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989133435567" class="contact-tel">+98 913 343 5567</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="Viyana 09001409109">
-                    <div class="contact-name">📌 Viyana</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09001409109" class="contact-tel">0900 140 9109</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="پارسا دایی 09010366856">
-                    <div class="contact-name">📌 پارسا دایی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09010366856" class="contact-tel">0901 036 6856</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="هم کلاسی زبان Elementary 09025351254">
-                    <div class="contact-name">📌 هم کلاسی زبان Elementary</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09025351254" class="contact-tel">0902 535 1254</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="SAM 09054883441">
-                    <div class="contact-name">📌 SAM</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09054883441" class="contact-tel">0905 488 3441</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="اوستاد زبان انگلیسی 09131962791">
-                    <div class="contact-name">📌 اوستاد زبان انگلیسی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09131962791" class="contact-tel">0913 196 2791</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="اکبری 09103052265">
-                    <div class="contact-name">📌 اکبری</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09103052265" class="contact-tel">0910 305 2265</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="عمه مونس 09131975672">
-                    <div class="contact-name">📌 عمه مونس</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09131975672" class="contact-tel">0913 197 5672</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="Father 09133878847">
-                    <div class="contact-name">📌 Father 👨</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09133878847" class="contact-tel">0913 387 8847</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="اقای فرزین استاد دفاعی 09133955012">
-                    <div class="contact-name">📌 اقای فرزین استاد دفاعی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09133955012" class="contact-tel">0913 395 5012</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="سازور 09135037604">
-                    <div class="contact-name">📌 سازور</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09135037604" class="contact-tel">0913 503 7604</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="خاله عاطفه +989365955957">
-                    <div class="contact-name">📌 خاله عاطفه</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989365955957" class="contact-tel">+98 936 595 5957</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="معلم ریاضی 09136196163">
-                    <div class="contact-name">📌 معلم ریاضی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09136196163" class="contact-tel">0913 619 6163</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="محمد سلیمان 09135984644">
-                    <div class="contact-name">📌 محمد سلیمان</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09135984644" class="contact-tel">0913 598 4644</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="سلیمانی 09136647465">
-                    <div class="contact-name">📌 سلیمانی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09136647465" class="contact-tel">0913 664 7465</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="Mother2 +989137613983">
-                    <div class="contact-name">📌 Mother2👩</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989137613983" class="contact-tel">+98 913 761 3983</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="مامان طاها سیوندی 09137850021">
-                    <div class="contact-name">📌 مامان طاها سیوندی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09137850021" class="contact-tel">0913 785 021</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="خاله فاطی 09140499075">
-                    <div class="contact-name">📌 خاله فاطی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09140499075" class="contact-tel">0914 049 9075</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="استاد زبان pro 09139565938">
-                    <div class="contact-name">📌 استاد زبان pro</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09139565938" class="contact-tel">0913 956 5938</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="کافی نت 09140630602">
-                    <div class="contact-name">📌 کافی نت</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09140630602" class="contact-tel">0914 063 0602</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="رامین 09162767597">
-                    <div class="contact-name">📌 رامین</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09162767597" class="contact-tel">0916 276 7597</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="مشاور-اقای دکتر فیروزیان 09194465458">
-                    <div class="contact-name">📌 مشاور-اقای دکتر فیروزیان</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09194465458" class="contact-tel">0919 446 5458</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="ارمان سوري 09308710476">
-                    <div class="contact-name">📌 ارمان سوري</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09308710476" class="contact-tel">0930 871 0476</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="کافی نت خاجو 09353558419">
-                    <div class="contact-name">📌 کافی نت خاجو</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09353558419" class="contact-tel">0935 355 8419</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="پارسا خواجوی 09309816697">
-                    <div class="contact-name">📌 پارسا خواجوی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09309816697" class="contact-tel">0930 981 6697</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="خاله سمیه 09357231889">
-                    <div class="contact-name">📌 خاله سمیه</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09357231889" class="contact-tel">0935 723 1889</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="علی طیاری 09360448960">
-                    <div class="contact-name">📌 علی طیاری</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09360448960" class="contact-tel">0936 044 8960</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="طاها سلطانی 09368414421">
-                    <div class="contact-name">📌 طاها سلطانی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09368414421" class="contact-tel">0936 841 4421</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="Grandfather 09391837763">
-                    <div class="contact-name">📌 Grandfather 👴</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09391837763" class="contact-tel">0939 183 7763</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="Mother 09395404661">
-                    <div class="contact-name">📌 Mother 👩</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09395404661" class="contact-tel">0939 540 4661</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="Taha 09394375852">
-                    <div class="contact-name">📌 Taha💙</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09394375852" class="contact-tel">0939 437 5852</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="Kian 09906364311">
-                    <div class="contact-name">📌 Kian🩵</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09906364311" class="contact-tel">0990 636 4311</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="soldierDark 09902139317">
-                    <div class="contact-name">📌 soldier*Dark</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09902139317" class="contact-tel">0990 213 9317</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="هم کلاسی زبان۱۰۳ 09934182082">
-                    <div class="contact-name">📌 هم کلاسی زبان۱۰۳</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09934182082" class="contact-tel">0993 418 2082</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="هم کلاسی کانون ریاضی 09940857046">
-                    <div class="contact-name">📌 هم کلاسی کانون ریاضی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09940857046" class="contact-tel">0994 085 7046</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="معلم ریاضی مدرسه اقای ایران نژاد +989132477186">
-                    <div class="contact-name">📌 معلم ریاضی مدرسه اقای ایران نژاد 8/3</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989132477186" class="contact-tel">+98 913 247 7186</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="هم کلاسی زبان +989136791671">
-                    <div class="contact-name">📌 هم کلاسی زبان</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989136791671" class="contact-tel">+98 913 679 1671</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="Hooman +989214979257">
-                    <div class="contact-name">📌 Hooman💜</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989214979257" class="contact-tel">+98 921 497 9257</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="زاهدی +989216910068">
-                    <div class="contact-name">📌 زاهدی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989216910068" class="contact-tel">+98 921 691 0068</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="ارش رجایی +989223036584">
-                    <div class="contact-name">📌 ارش رجایی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989223036584" class="contact-tel">+98 922 303 6584</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item thomas-contact" data-search="خاله عاطفه +989362022346">
-                    <div class="contact-name">📌 خاله عاطفه</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989362022346" class="contact-tel">+98 936 202 2346</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-            </div>
-            <div class="footer"><span>✦</span> مخاطبین توماس شلبی <span>✦</span></div>
+<!-- ==================== بخش تیم‌های هکری (صفحه انتخاب) ==================== -->
+<div id="teamsPage" class="page">
+    <div class="card">
+        <button class="back-btn" onclick="switchPage('mainPage')">↩ بازگشت به صفحه اصلی</button>
+        <h1 style="text-shadow: 0 0 20px #1a7ad4, 0 0 40px #0a4da4;">⚔️ تیم‌های هکری</h1>
+        <div class="sub">انتخاب تیم مورد نظر</div>
+                <div class="sub">فعلا فقط جآوید موجود است</div>
+        <div class="team-select-buttons">
+            <button class="team-select-btn" onclick="switchPage('teamDetailPage')">🛡️ APT WAR (جآوید)</button>
         </div>
+        <div class="footer"><span>✦</span> لطفاً یکی از تیم‌ها را انتخاب کنید <span>✦</span></div>
     </div>
+</div>
 
-    <!-- ==================== نامی ==================== -->
-    <div id="namiContactsPage" class="page">
-        <div class="card">
-            <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
-            <h1 class="nami-header">🌟 𝑵𝒂𝒎𝒊 †</h1>
-            <div class="sub nami-sub">مخاطبین نامی</div>
-            <div class="search-box">
-                <input type="text" id="namiSearchInput" placeholder="جستجو در مخاطبین نامی ...">
-                <button id="namiSearchBtn" aria-label="جستجو">🔍</button>
-            </div>
-            <div id="namiContactList">
-                <div class="contact-item nami-contact" data-search="آوش +989059685590">
-                    <div class="contact-name">📌 آوش</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989059685590" class="contact-tel">+98 905 968 5590</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="امیر علی +989054413056">
-                    <div class="contact-name">📌 امیر علی</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989054413056" class="contact-tel">+98 905 441 3056</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="کیانوش +989036325099">
-                    <div class="contact-name">📌 کیانوش</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989036325099" class="contact-tel">+98 903 632 5099</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="اندازه اینترنت ایرانسل *555*1*4*1#">
-                    <div class="contact-name">📌 اندازه اینترنت ایرانسل</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:*555*1*4*1%23" class="contact-tel">*555*1*4*1#</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="پوگبا +989028680048">
-                    <div class="contact-name">📌 پوگبا</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989028680048" class="contact-tel">+98 902 868 0048</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="حسین مافیا +989213960620">
-                    <div class="contact-name">📌 حسین مافیا</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989213960620" class="contact-tel">+98 921 396 0620</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Taha Gogoli +989159417518">
-                    <div class="contact-name">📌 Taha Gogoli</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989159417518" class="contact-tel">+98 915 941 7518</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="پارسا رایتل سرور دار +989217630078">
-                    <div class="contact-name">📌 پارسا (رایتل سرور دار)</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989217630078" class="contact-tel">+98 921 763 0078</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="اکس امیر +989398888353">
-                    <div class="contact-name">📌 اکس امیر</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989398888353" class="contact-tel">+98 939 888 8353</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="my love +989926486857">
-                    <div class="contact-name">📌 𝓶𝔂 𝓵𝓸𝓿𝓮 (^_^)</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989926486857" class="contact-tel">+98 992 648 6857</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="ستاره +989926486857">
-                    <div class="contact-name">📌 ستاره💕</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989926486857" class="contact-tel">+98 992 648 6857</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="پارسا ۲ سرور دار +989926865548">
-                    <div class="contact-name">📌 پارسا ۲ سرور دار</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989926865548" class="contact-tel">+98 992 686 5548</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="آقا محمد +989933601913">
-                    <div class="contact-name">📌 آقا محمد</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989933601913" class="contact-tel">+98 993 360 1913</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Dad +989163058029">
-                    <div class="contact-name">📌 Dad</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989163058029" class="contact-tel">+98 916 305 8029</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Mom +989163234695">
-                    <div class="contact-name">📌 Mom</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989163234695" class="contact-tel">+98 916 323 4695</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Daei Hossin +989163068408">
-                    <div class="contact-name">📌 Daei Hossin</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989163068408" class="contact-tel">+98 916 306 8408</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Artin +989166349545">
-                    <div class="contact-name">📌 Artin</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989166349545" class="contact-tel">+98 916 634 9545</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Amir H +989339612402">
-                    <div class="contact-name">📌 Amir [H]</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989339612402" class="contact-tel">+98 933 961 2402</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Melody +989916516042">
-                    <div class="contact-name">📌 Melody</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989916516042" class="contact-tel">+98 991 651 6042</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Mani +989939498189">
-                    <div class="contact-name">📌 Mani</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:+989939498189" class="contact-tel">+98 993 949 8189</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="حسین مافیا کلن دار 09148093154">
-                    <div class="contact-name">📌 حسین مافیا کلن دار</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09148093154" class="contact-tel">0914 809 3154</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="شاید امیر باشه 09305303085">
-                    <div class="contact-name">📌 شاید امیر باشه</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09305303085" class="contact-tel">0930 530 3085</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="پارسا بلژیک 09167440954">
-                    <div class="contact-name">📌 پارسا (بلژیک)</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09167440954" class="contact-tel">0916 744 0954</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Amin 09335592409">
-                    <div class="contact-name">📌 Amin</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09335592409" class="contact-tel">0933 559 2409</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="امیر علی که قراره بهش چیت بدم 09374197378">
-                    <div class="contact-name">📌 امیر علی که قراره بهش چیت بدم</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09374197378" class="contact-tel">0937 419 7378</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Taha 09919116856">
-                    <div class="contact-name">📌 Taha</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09919116856" class="contact-tel">09919116856</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="حسین 09930149673">
-                    <div class="contact-name">📌 حسین</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09930149673" class="contact-tel">09930149673</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="همراه اول 09964143236">
-                    <div class="contact-name">📌 همراه اول</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:09964143236" class="contact-tel">09964143236</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Police 110">
-                    <div class="contact-name">📌 Police</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:110" class="contact-tel">110</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="اورژانس 115">
-                    <div class="contact-name">📌 اورژانس 115</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:115" class="contact-tel">115</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-                <div class="contact-item nami-contact" data-search="Fire Station 125">
-                    <div class="contact-name">📌 Fire Station</div>
-                    <div class="contact-relation">🚹 شماره: <a href="tel:125" class="contact-tel">125</a></div>
-                    <div class="contact-ip">📱 IP: -</div>
-                </div>
-            </div>
-            <div class="footer"><span>✦</span> مخاطبین نامی <span>✦</span></div>
+<!-- ==================== صفحه جزئیات تیم APT WAR ==================== -->
+<div id="teamDetailPage" class="page">
+    <div class="card">
+        <button class="back-btn" onclick="switchPage('teamsPage')">↩ بازگشت به لیست تیم‌ها</button>
+        <h1 style="text-shadow: 0 0 20px #1a7ad4, 0 0 40px #0a4da4;">🛡️ APT WAR</h1>
+        <div class="sub">اطلاعات کامل تیم جآوید</div>
+        
+        <!-- بخش جستجو -->
+        <div class="search-box">
+            <input type="text" id="teamMemberSearchInput" placeholder="جستجو در اعضای تیم ...">
+            <button id="teamMemberSearchBtn" aria-label="جستجو">🔍</button>
         </div>
+
+        <!-- اطلاعات تیم -->
+        <div class="team-detail-card">
+            <div class="team-name">🛡️ APT WAR (جآوید)</div>
+            <div class="team-info"><strong>تعداد اعضا:</strong> ۱۹ نفر</div>
+            <div class="team-info"><strong>تخصص:</strong> امنیت سایبری، هک اخلاقی، نفوذ و تست نفوذ</div>
+            <div class="team-info"><strong>سال تأسیس:</strong> ۱۴۰۲</div>
+            <div class="team-info"><strong>وضعیت:</strong> فعال</div>
+        </div>
+
+        <!-- لیست اعضا -->
+        <div class="member-list" id="teamMembersList">
+            <!-- اعضا توسط JS رندر می‌شوند -->
+        </div>
+
+        <div class="footer"><span>✦</span> تمامی افشاها مربوط به ایران سایبری میباشد <span>✦</span></div>
     </div>
+</div>
 
-    <script>
-        (function() {
-            window.switchPage = function(pageId) {
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                var target = document.getElementById(pageId);
-                if (target) { target.classList.add('active'); }
-            };
+<!-- ==================== دارکنس ==================== -->
+<div id="darknessContactsPage" class="page">
+    <div class="card">
+        <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
+        <h1 style="text-shadow: 0 0 20px #ff4444, 0 0 40px #aa0000;">🌑 دارکنس</h1>
+        <div class="sub">مخاطبین امین‌رضا جعفری (دارکنس)</div>
+        <div class="search-box">
+            <input type="text" id="darknessSearchInput" placeholder="جستجو در مخاطبین دارکنس ...">
+            <button id="darknessSearchBtn" aria-label="جستجو">🔍</button>
+        </div>
+        <div id="darknessContactList">
+            <div class="contact-item" data-search="𝓓𝓪𝓷𝓲 𝓜𝓪𝓱𝓭𝓪𝓿𝓲 09034844114"><div class="contact-name">📌 𝓓𝓪𝓷𝓲 𝓜𝓪𝓱𝓭𝓪𝓿𝓲</div><div class="contact-relation">🚹 شماره: <a href="tel:09034844114" class="contact-tel">0903 484 4114</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="𝓜𝔂 𝓑𝓻𝓸𝓽𝓱𝓮𝓻 09103304601"><div class="contact-name">📌 𝓜𝔂 𝓑𝓻𝓸𝓽𝓱𝓮𝓻</div><div class="contact-relation">🚹 شماره: <a href="tel:09103304601" class="contact-tel">0910 330 4601</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Eli Fifi 09172730151"><div class="contact-name">📌 Eli Fifi</div><div class="contact-relation">🚹 شماره: <a href="tel:09172730151" class="contact-tel">0917 273 0151</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="𝓐𝓶𝓲𝓻 𝓜𝓪𝓱𝓭𝓲 𝓢𝓲𝓻𝓪𝔃𝓲 09172579315"><div class="contact-name">📌 𝓐𝓶𝓲𝓻 𝓜𝓪𝓱𝓭𝓲 𝓢𝓲𝓻𝓪𝔃𝓲</div><div class="contact-relation">🚹 شماره: <a href="tel:09172579315" class="contact-tel">0917 257 9315</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Abbas Zarafe 09910236584"><div class="contact-name">📌 Abbas Zarafe🦒</div><div class="contact-relation">🚹 شماره: <a href="tel:09910236584" class="contact-tel">0991 023 6584</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="کص خل دریای 09913571195"><div class="contact-name">📌 کص خل دریای</div><div class="contact-relation">🚹 شماره: <a href="tel:09913571195" class="contact-tel">0991 357 1195</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Mohsen Lalai 09966470883"><div class="contact-name">📌 Mohsen Lalai</div><div class="contact-relation">🚹 شماره: <a href="tel:09966470883" class="contact-tel">0996 647 0883</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Mohsn Tof Tof 09966970883"><div class="contact-name">📌 Mohsn Tof Tof</div><div class="contact-relation">🚹 شماره: <a href="tel:09966970883" class="contact-tel">09966970883</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Kakey Homan +989179713860"><div class="contact-name">📌 Kakey Homan</div><div class="contact-relation">🚹 شماره: <a href="tel:+989179713860" class="contact-tel">+98 917 971 3860</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Ali اریشگر +989368156305"><div class="contact-name">📌 Ali اریشگر</div><div class="contact-relation">🚹 شماره: <a href="tel:+989368156305" class="contact-tel">+98 936 815 6305</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Mah Owzayesh +989378502086"><div class="contact-name">📌 Mah Owzayesh</div><div class="contact-relation">🚹 شماره: <a href="tel:+989378502086" class="contact-tel">+98 937 850 2086</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="𝓝𝓪𝓶𝓭𝓪𝓻 +989384543499"><div class="contact-name">📌 𝓝𝓪𝓶𝓭𝓪𝓻</div><div class="contact-relation">🚹 شماره: <a href="tel:+989384543499" class="contact-tel">+98 938 454 3499</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="亗𝓐𝓶𝓲𝓻 𝓗𝓸𝓼𝓲𝓷 𝓑𝓪𝓻𝔃𝓰𝓪𝓻𝓲 +989904032826"><div class="contact-name">📌 亗𝓐𝓶𝓲𝓻 𝓗𝓸𝓼𝓲𝓷 𝓑𝓪𝓻𝔃𝓰𝓪𝓻𝓲</div><div class="contact-relation">🚹 شماره: <a href="tel:+989904032826" class="contact-tel">+98 990 403 2826</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Khosro +989907553960"><div class="contact-name">📌 Khosro</div><div class="contact-relation">🚹 شماره: <a href="tel:+989907553960" class="contact-tel">+98 990 755 3960</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Sherani +989033014749"><div class="contact-name">📌 Sherani 🙉</div><div class="contact-relation">🚹 شماره: <a href="tel:+989033014749" class="contact-tel">+98 903 301 4749</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="꧁𝓓𝓪𝓭𝓭𝔂 +989173724630"><div class="contact-name">📌 ꧁𝓓𝓪𝓭𝓭𝔂</div><div class="contact-relation">🚹 شماره: <a href="tel:+989173724630" class="contact-tel">+98 917 372 4630</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Mohsan Tof Tof 2 +989109263931"><div class="contact-name">📌 Mohsan Tof Tof 2</div><div class="contact-relation">🚹 شماره: <a href="tel:+989109263931" class="contact-tel">+98 910 926 3931</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="𝓜𝓸𝓶 +989173754283"><div class="contact-name">📌 𝓜𝓸𝓶</div><div class="contact-relation">🚹 شماره: <a href="tel:+989173754283" class="contact-tel">+98 917 375 4283</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="حمید جعفری +989173724630"><div class="contact-name">📌 حمید جعفری</div><div class="contact-relation">🚹 شماره: <a href="tel:+989173724630" class="contact-tel">+989173724630</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Zizi Kholo +989937336683"><div class="contact-name">📌 Zizi Kholo</div><div class="contact-relation">🚹 شماره: <a href="tel:+989937336683" class="contact-tel">+98 993 733 6683</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="𝓜𝓸𝓱𝓪𝓭𝓼𝓮 +989926726251"><div class="contact-name">📌 𝓜𝓸𝓱𝓪𝓭𝓼𝓮</div><div class="contact-relation">🚹 شماره: <a href="tel:+989926726251" class="contact-tel">+98 992 672 6251</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Keshavarz Kangon Bargh Mashin +989176665931"><div class="contact-name">📌 Keshavarz Kangon Bargh Mashin</div><div class="contact-relation">🚹 شماره: <a href="tel:+989176665931" class="contact-tel">+989176665931</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="My Girl +989940400036"><div class="contact-name">📌 My Girl</div><div class="contact-relation">🚹 شماره: <a href="tel:+989940400036" class="contact-tel">+989940400036</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="ℳ𝒴ℊ𝒾𝓇ℓ +989940400036"><div class="contact-name">📌 ℳ𝒴ℊ𝒾𝓇ℓ</div><div class="contact-relation">🚹 شماره: <a href="tel:+989940400036" class="contact-tel">+989940400036</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="My girl +989940400036"><div class="contact-name">📌 My girl</div><div class="contact-relation">🚹 شماره: <a href="tel:+989940400036" class="contact-tel">+989940400036</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="حمید جعفری 09023912488"><div class="contact-name">📌 حمید جعفری</div><div class="contact-relation">🚹 شماره: <a href="tel:09023912488" class="contact-tel">09023912488</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Dani Mahdavi 09034844114"><div class="contact-name">📌 Dani Mahdavi</div><div class="contact-relation">🚹 شماره: <a href="tel:09034844114" class="contact-tel">09034844114</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Amir Hosine 09165404817"><div class="contact-name">📌 Amir Hosine</div><div class="contact-relation">🚹 شماره: <a href="tel:09165404817" class="contact-tel">0916 540 4817</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="حسین جقی 09910878529"><div class="contact-name">📌 حسین جقی</div><div class="contact-relation">🚹 شماره: <a href="tel:09910878529" class="contact-tel">0991 087 8529</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Abbas Baghbani 09937189816"><div class="contact-name">📌 Abbas Baghbani</div><div class="contact-relation">🚹 شماره: <a href="tel:09937189816" class="contact-tel">0993 718 9816</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="ℳ𝒴ℊ𝒾𝓇ℓ 09940400036"><div class="contact-name">📌 ℳ𝒴ℊ𝒾𝓇ℓ</div><div class="contact-relation">🚹 شماره: <a href="tel:09940400036" class="contact-tel">0994 040 0036</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Police 110"><div class="contact-name">📌 Police</div><div class="contact-relation">🚹 شماره: <a href="tel:110" class="contact-tel">110</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Reza Javid +989164975212"><div class="contact-name">📌 Reza Javid</div><div class="contact-relation">🚹 شماره: <a href="tel:+989164975212" class="contact-tel">+98 916 497 5212</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Babaei +989176674214"><div class="contact-name">📌 Babaei 🐑</div><div class="contact-relation">🚹 شماره: <a href="tel:+989176674214" class="contact-tel">+98 917 667 4214</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="206 +989924459910"><div class="contact-name">📌 206</div><div class="contact-relation">🚹 شماره: <a href="tel:+989924459910" class="contact-tel">+98 992 445 9910</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="Amir Hosin Barzgari +989904032826"><div class="contact-name">📌 Amir Hosin Barzgari</div><div class="contact-relation">🚹 شماره: <a href="tel:+989904032826" class="contact-tel">+989904032826</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+        </div>
+        <div class="footer"><span>✦</span> مخاطبین دارکنس <span>✦</span></div>
+    </div>
+</div>
 
-            function setupSearch(inputId, btnId, listId) {
-                var input = document.getElementById(inputId);
-                var btn = document.getElementById(btnId);
-                var list = document.getElementById(listId);
-                if (!input || !btn || !list) return;
-                var items = list.querySelectorAll('.contact-item, .revelation-item');
+<!-- ==================== تیفانی ==================== -->
+<div id="tiffanyContactsPage" class="page">
+    <div class="card">
+        <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
+        <h1 style="text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493;">💎 تیفانی</h1>
+        <div class="sub">مخاطبین پریسا زارعی (تیفانی)</div>
+        <div class="search-box">
+            <input type="text" id="tiffanySearchInput" placeholder="جستجو در مخاطبین تیفانی ...">
+            <button id="tiffanySearchBtn" aria-label="جستجو">🔍</button>
+        </div>
+        <div id="tiffanyContactList">
+            <div class="contact-item" data-search="💗💗☄️🌌حنا🥰 09927128767"><div class="contact-name">📌 💗💗☄️🌌حنا🥰</div><div class="contact-relation">🚹 شماره: <a href="tel:09927128767" class="contact-tel">09927128767</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="راضی 989300874640"><div class="contact-name">📌 راضی</div><div class="contact-relation">🚹 شماره: <a href="tel:989300874640" class="contact-tel">989300874640</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="😤😤😮‍💨😮‍💨👹بدبختی من😶‍🌫️😶‍🌫️ +989024469078"><div class="contact-name">📌 😤😤😮‍💨😮‍💨👹بدبختی من😶‍🌫️😶‍🌫️</div><div class="contact-relation">🚹 شماره: <a href="tel:+989024469078" class="contact-tel">+98 902 446 9078</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="رضا کلاف +989036106245"><div class="contact-name">📌 رضا کلاف</div><div class="contact-relation">🚹 شماره: <a href="tel:+989036106245" class="contact-tel">+98 903 610 6245</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="محمدرضا گلبینی +989175758196"><div class="contact-name">📌 محمدرضا گلبینی</div><div class="contact-relation">🚹 شماره: <a href="tel:+989175758196" class="contact-tel">+98 917 575 8196</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="سید رضا سجادی +989942913464"><div class="contact-name">📌 سید رضا سجادی</div><div class="contact-relation">🚹 شماره: <a href="tel:+989942913464" class="contact-tel">+989942913464</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="امیر علی +989945102462"><div class="contact-name">📌 امیر علی</div><div class="contact-relation">🚹 شماره: <a href="tel:+989945102462" class="contact-tel">+989945102462</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="🫀🫂خاله مریمم💋💋 09171743602"><div class="contact-name">📌 🫀🫂خاله مریمم💋💋</div><div class="contact-relation">🚹 شماره: <a href="tel:09171743602" class="contact-tel">0917 174 3602</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="دایی علی +989372723422"><div class="contact-name">📌 دایی علی</div><div class="contact-relation">🚹 شماره: <a href="tel:+989372723422" class="contact-tel">+98 937 272 3422</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="خاله معصومه +989373483622"><div class="contact-name">📌 خاله معصومه</div><div class="contact-relation">🚹 شماره: <a href="tel:+989373483622" class="contact-tel">+98 937 348 3622</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="💐🪷فاطمه زهرا سیسی🌷👸🏻 +989396182412"><div class="contact-name">📌 💐🪷فاطمه زهرا سیسی🌷👸🏻</div><div class="contact-relation">🚹 شماره: <a href="tel:+989396182412" class="contact-tel">+989396182412</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="علی آبپخش +989914237091"><div class="contact-name">📌 علی آبپخش</div><div class="contact-relation">🚹 شماره: <a href="tel:+989914237091" class="contact-tel">+989914237091</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="نرجس +989916844034"><div class="contact-name">📌 نرجس</div><div class="contact-relation">🚹 شماره: <a href="tel:+989916844034" class="contact-tel">+989916844034</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="متین حاجیلو +989916859947"><div class="contact-name">📌 متین حاجیلو</div><div class="contact-relation">🚹 شماره: <a href="tel:+989916859947" class="contact-tel">+989916859947</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="mahmadjavad +989919089421"><div class="contact-name">📌 mahmadjavad</div><div class="contact-relation">🚹 شماره: <a href="tel:+989919089421" class="contact-tel">+989919089421</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="🌃🌃نازی🤗 +989921899856"><div class="contact-name">📌 🌃🌃نازی🤗</div><div class="contact-relation">🚹 شماره: <a href="tel:+989921899856" class="contact-tel">+989921899856</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="بردستانی میاخلیفه +989928525143"><div class="contact-name">📌 بردستانی میاخلیفه</div><div class="contact-relation">🚹 شماره: <a href="tel:+989928525143" class="contact-tel">+989928525143</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="دایی ساپالار +989928809278"><div class="contact-name">📌 دایی ساپالار</div><div class="contact-relation">🚹 شماره: <a href="tel:+989928809278" class="contact-tel">+989928809278</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="جواد میو +989937504715"><div class="contact-name">📌 جواد میو</div><div class="contact-relation">🚹 شماره: <a href="tel:+989937504715" class="contact-tel">+989937504715</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="✨😺گربه😺✨ 09101551410"><div class="contact-name">📌 ✨😺گربه😺✨</div><div class="contact-relation">🚹 شماره: <a href="tel:09101551410" class="contact-tel">0910 155 1410</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="♥️🎀جیسون🎀♥️ 09117867680"><div class="contact-name">📌 ♥️🎀جیسون🎀♥️</div><div class="contact-relation">🚹 شماره: <a href="tel:09117867680" class="contact-tel">0911 786 7680</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="دختر عمه فاطمه 09176683410"><div class="contact-name">📌 دختر عمه فاطمه</div><div class="contact-relation">🚹 شماره: <a href="tel:09176683410" class="contact-tel">0917 668 3410</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="🫂عمه نصرت🌅 09176683409"><div class="contact-name">📌 🫂عمه نصرت🌅</div><div class="contact-relation">🚹 شماره: <a href="tel:09176683409" class="contact-tel">09176683409</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="امیر عباس 0920889072"><div class="contact-name">📌 امیر عباس</div><div class="contact-relation">🚹 شماره: <a href="tel:0920889072" class="contact-tel">0920 889 072</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="🌠یسنا 🪐 09336329664"><div class="contact-name">📌 🌠یسنا 🪐</div><div class="contact-relation">🚹 شماره: <a href="tel:09336329664" class="contact-tel">09336329664</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="اسکندری 09360118598"><div class="contact-name">📌 اسکندری</div><div class="contact-relation">🚹 شماره: <a href="tel:09360118598" class="contact-tel">09360118598</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="✨✨صدرا✨✨ 09370598767"><div class="contact-name">📌 ✨✨صدرا✨✨</div><div class="contact-relation">🚹 شماره: <a href="tel:09370598767" class="contact-tel">0937 059 8767</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="🤍🤍مامانی🤍🤍🌃 09378270223"><div class="contact-name">📌 🤍🤍مامانی🤍🤍🌃</div><div class="contact-relation">🚹 شماره: <a href="tel:09378270223" class="contact-tel">09378270223</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+            <div class="contact-item" data-search="داش ممد 0939"><div class="contact-name">📌 داش ممد</div><div class="contact-relation">🚹 شماره: <a href="tel:0939" class="contact-tel">0939</a></div><div class="contact-ip">📱 IP: SKQ1.211006.001</div></div>
+        </div>
+        <div class="footer"><span>✦</span> مخاطبین تیفانی <span>✦</span></div>
+    </div>
+</div>
 
-                function doSearch() {
-                    var query = input.value.trim().toLowerCase();
-                    items.forEach(function(item) {
-                        var searchData = (item.getAttribute('data-search') || '').toLowerCase();
-                        var text = item.textContent.toLowerCase();
-                        var match = query === '' || searchData.includes(query) || text.includes(query);
-                        item.style.display = match ? 'block' : 'none';
-                    });
-                }
-                btn.addEventListener('click', doSearch);
-                input.addEventListener('keyup', function(e) {
-                    if (e.key === 'Enter') doSearch();
-                    doSearch();
-                });
-            }
+<!-- ==================== نازی ==================== -->
+<div id="naziContactsPage" class="page">
+    <div class="card">
+        <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
+        <h1 style="text-shadow: 0 0 20px #ffd700, 0 0 40px #ff8c00;">👑 نازی</h1>
+        <div class="sub">مخاطبین نازنین افروز (نازی)</div>
+        <div class="search-box">
+            <input type="text" id="naziSearchInput" placeholder="جستجو در مخاطبین نازی ...">
+            <button id="naziSearchBtn" aria-label="جستجو">🔍</button>
+        </div>
+        <div id="naziContactList">
+            <div class="contact-item" data-search="باشگاه پالادیوم 09101616969"><div class="contact-name">📌 باشگاه پالادیوم</div><div class="contact-relation">🚹 شماره: <a href="tel:09101616969" class="contact-tel">0910 161 6969</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="مامان مهسا 09173694261"><div class="contact-name">📌 مامان مهسا</div><div class="contact-relation">🚹 شماره: <a href="tel:09173694261" class="contact-tel">0917 369 4261</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="وحید 09176952580"><div class="contact-name">📌 وحید</div><div class="contact-relation">🚹 شماره: <a href="tel:09176952580" class="contact-tel">0917 695 2580</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="مامان نیکا 09171606408"><div class="contact-name">📌 مامان نیکا</div><div class="contact-relation">🚹 شماره: <a href="tel:09171606408" class="contact-tel">0917 160 6408</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="سمیره 09164513813"><div class="contact-name">📌 سمیره</div><div class="contact-relation">🚹 شماره: <a href="tel:09164513813" class="contact-tel">0916 451 3813</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="ممد علی رفیق همیشگی 09172168543"><div class="contact-name">📌 ممد علی رفیق همیشگی</div><div class="contact-relation">🚹 شماره: <a href="tel:09172168543" class="contact-tel">0917 216 8543</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="خاله حکیمه 09177323714"><div class="contact-name">📌 خاله حکیمه</div><div class="contact-relation">🚹 شماره: <a href="tel:09177323714" class="contact-tel">0917 732 3714</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="کپی ۵ 09178694104"><div class="contact-name">📌 کپی ۵</div><div class="contact-relation">🚹 شماره: <a href="tel:09178694104" class="contact-tel">09178694104</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="حشمت نژاد 09179321395"><div class="contact-name">📌 حشمت نژاد</div><div class="contact-relation">🚹 شماره: <a href="tel:09179321395" class="contact-tel">09179321395</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="علی رجب 09173305447"><div class="contact-name">📌 علی رجب</div><div class="contact-relation">🚹 شماره: <a href="tel:09173305447" class="contact-tel">09173305447</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="کوثر توانایی 09302342376"><div class="contact-name">📌 کوثر توانایی</div><div class="contact-relation">🚹 شماره: <a href="tel:09302342376" class="contact-tel">0930 234 2376</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="عشقم رکسانا 09302631084"><div class="contact-name">📌 عشقم رکسانا</div><div class="contact-relation">🚹 شماره: <a href="tel:09302631084" class="contact-tel">0930 263 1084</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="طناز جنده 09303309524"><div class="contact-name">📌 طناز جنده</div><div class="contact-relation">🚹 شماره: <a href="tel:09303309524" class="contact-tel">0930 330 9524</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Yalda 22 09304773104"><div class="contact-name">📌 Yalda 22</div><div class="contact-relation">🚹 شماره: <a href="tel:09304773104" class="contact-tel">0930 477 3104</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="My wife 09306492349"><div class="contact-name">📌 My wife💕</div><div class="contact-relation">🚹 شماره: <a href="tel:09306492349" class="contact-tel">0930 649 2349</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Meti 09305983503"><div class="contact-name">📌 Meti</div><div class="contact-relation">🚹 شماره: <a href="tel:09305983503" class="contact-tel">0930 598 3503</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="آوید عموزاده 09333941033"><div class="contact-name">📌 آوید عموزاده</div><div class="contact-relation">🚹 شماره: <a href="tel:09333941033" class="contact-tel">0933 394 1033</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="افسانه موبایلی 09337330514"><div class="contact-name">📌 افسانه موبایلی</div><div class="contact-relation">🚹 شماره: <a href="tel:09337330514" class="contact-tel">0933 733 0514</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="ناهید جاسم 09365458082"><div class="contact-name">📌 ناهید جاسم</div><div class="contact-relation">🚹 شماره: <a href="tel:09365458082" class="contact-tel">0936 545 8082</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="نازنین زهرا افروز زادگان 09339669453"><div class="contact-name">📌 نازنین زهرا افروز زادگان</div><div class="contact-relation">🚹 شماره: <a href="tel:09339669453" class="contact-tel">0933 966 9453</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Zoha 09370518916"><div class="contact-name">📌 Zoha</div><div class="contact-relation">🚹 شماره: <a href="tel:09370518916" class="contact-tel">0937 051 8916</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="سمندون 09339669453"><div class="contact-name">📌 سمندون</div><div class="contact-relation">🚹 شماره: <a href="tel:09339669453" class="contact-tel">09339669453</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Aylin 09370737588"><div class="contact-name">📌 Aylin ♡</div><div class="contact-relation">🚹 شماره: <a href="tel:09370737588" class="contact-tel">0937 073 7588</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="طناز رحمان 09376420758"><div class="contact-name">📌 طناز رحمان</div><div class="contact-relation">🚹 شماره: <a href="tel:09376420758" class="contact-tel">0937 642 0758</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Parmin 09392509365"><div class="contact-name">📌 Parmin</div><div class="contact-relation">🚹 شماره: <a href="tel:09392509365" class="contact-tel">0939 250 9365</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="مهرشاد 09906730740"><div class="contact-name">📌 مهرشاد</div><div class="contact-relation">🚹 شماره: <a href="tel:09906730740" class="contact-tel">0990 673 0740</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="مهدی 09375240958"><div class="contact-name">📌 مهدی</div><div class="contact-relation">🚹 شماره: <a href="tel:09375240958" class="contact-tel">0937 524 0958</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Mobina 09907325464"><div class="contact-name">📌 Mobina</div><div class="contact-relation">🚹 شماره: <a href="tel:09907325464" class="contact-tel">0990 732 5464</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Sahar 09910193266"><div class="contact-name">📌 Sahar✨️🩵</div><div class="contact-relation">🚹 شماره: <a href="tel:09910193266" class="contact-tel">0991 019 3266</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Parisa 09930101592"><div class="contact-name">📌 Parisa</div><div class="contact-relation">🚹 شماره: <a href="tel:09930101592" class="contact-tel">0993 010 1592</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="طناز رحمان ۲ 09963124911"><div class="contact-name">📌 طناز رحمان ۲</div><div class="contact-relation">🚹 شماره: <a href="tel:09963124911" class="contact-tel">0996 312 4911</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Sana 09963900418"><div class="contact-name">📌 Sana</div><div class="contact-relation">🚹 شماره: <a href="tel:09963900418" class="contact-tel">0996 390 0418</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Health Emergency 115"><div class="contact-name">📌 Health Emergency</div><div class="contact-relation">🚹 شماره: <a href="tel:115" class="contact-tel">115</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Fire Station 125"><div class="contact-name">📌 Fire Station</div><div class="contact-relation">🚹 شماره: <a href="tel:125" class="contact-tel">125</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Police 110"><div class="contact-name">📌 Police</div><div class="contact-relation">🚹 شماره: <a href="tel:110" class="contact-tel">110</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="دیانا 09916977267"><div class="contact-name">📌 دیانا</div><div class="contact-relation">🚹 شماره: <a href="tel:09916977267" class="contact-tel">0991 697 7267</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="رمزپرونده 34670"><div class="contact-name">📌 رمزپرونده</div><div class="contact-relation">🚹 شماره: <a href="tel:34670" class="contact-tel">34670</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="شماره پرونده 9909980226100462"><div class="contact-name">📌 شماره پرونده</div><div class="contact-relation">🚹 شماره: <a href="tel:9909980226100462" class="contact-tel">9909980226100462</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Ghazal +989050171213"><div class="contact-name">📌 Ghazal</div><div class="contact-relation">🚹 شماره: <a href="tel:+989050171213" class="contact-tel">+98 905 017 1213</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Andia +989039179423"><div class="contact-name">📌 Andia</div><div class="contact-relation">🚹 شماره: <a href="tel:+989039179423" class="contact-tel">+98 903 917 9423</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="سویییت +989012361376"><div class="contact-name">📌 سویییت</div><div class="contact-relation">🚹 شماره: <a href="tel:+989012361376" class="contact-tel">+98 901 236 1376</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+            <div class="contact-item" data-search="Kfc +987633678488"><div class="contact-name">📌 Kfc</div><div class="contact-relation">🚹 شماره: <a href="tel:+987633678488" class="contact-tel">+98 76 3367 8488</a></div><div class="contact-ip">📱 IP: UP1A.231005.007</div></div>
+        </div>
+        <div class="footer"><span>✦</span> مخاطبین نازی <span>✦</span></div>
+    </div>
+</div>
 
-            setupSearch('searchInput', 'searchBtn', 'revelationList');
-            setupSearch('darknessSearchInput', 'darknessSearchBtn', 'darknessContactList');
-            setupSearch('tiffanySearchInput', 'tiffanySearchBtn', 'tiffanyContactList');
-            setupSearch('naziSearchInput', 'naziSearchBtn', 'naziContactList');
-            setupSearch('thomasSearchInput', 'thomasSearchBtn', 'thomasContactList');
-            setupSearch('namiSearchInput', 'namiSearchBtn', 'namiContactList');
+<!-- ==================== توماس شلبی ==================== -->
+<div id="thomasContactsPage" class="page">
+    <div class="card">
+        <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
+        <h1 class="thomas-header">Tomas Shelbi</h1>
+        <div class="sub thomas-sub">مخاطبین توماس شلبی</div>
+        <div class="search-box">
+            <input type="text" id="thomasSearchInput" placeholder="جستجو در مخاطبین توماس شلبی ...">
+            <button id="thomasSearchBtn" aria-label="جستجو">🔍</button>
+        </div>
+        <div id="thomasContactList">
+            <div class="contact-item thomas-contact" data-search="Grandmother +989369946842">
+                <div class="contact-name">📌 Grandmother 👵</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989369946842" class="contact-tel">+98 936 994 6842</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="امیر حسین زمانی +989040692566">
+                <div class="contact-name">📌 امیر حسین زمانی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989040692566" class="contact-tel">+98 904 069 2566</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="عمه مهشید +989130709378">
+                <div class="contact-name">📌 عمه مهشید</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989130709378" class="contact-tel">+98 913 070 9378</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="دوست کلاس زبان +989029321390">
+                <div class="contact-name">📌 دوست کلاس زبان</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989029321390" class="contact-tel">+98 902 932 1390</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="ایران نژاد +989037375040">
+                <div class="contact-name">📌 ایران نژاد</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989037375040" class="contact-tel">+98 903 737 5040</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="هم کلاسی زبان +989903411983">
+                <div class="contact-name">📌 هم کلاسی زبان</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989903411983" class="contact-tel">+98 990 341 1983</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="متین +989934932966">
+                <div class="contact-name">📌 متین</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989934932966" class="contact-tel">+98 993 493 2966</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="نیما سلیمانی +989938353479">
+                <div class="contact-name">📌 نیما سلیمانی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989938353479" class="contact-tel">+98 993 835 3479</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="Taha +989942018511">
+                <div class="contact-name">📌 Taha🧑</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989942018511" class="contact-tel">+98 994 201 8511</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="هم کلاسی زبان ۱۰۲ +989945165049">
+                <div class="contact-name">📌 هم کلاسی زبان ۱۰۲</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989945165049" class="contact-tel">+98 994 516 5049</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="هم کلاسی زبان ۱۰۱ +989965281537">
+                <div class="contact-name">📌 هم کلاسی زبان ۱۰۱</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989965281537" class="contact-tel">+98 996 528 1537</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="Friend +989966101656">
+                <div class="contact-name">📌 Friend 🧡</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989966101656" class="contact-tel">+98 996 610 1656</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="معراج اندیشه +9866000500608">
+                <div class="contact-name">📌 معراج اندیشه</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+9866000500608" class="contact-tel">+98 6600 0500 608</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="A Mehrdad Nazarieh +989133435567">
+                <div class="contact-name">📌 A Mehrdad Nazarieh</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989133435567" class="contact-tel">+98 913 343 5567</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="Viyana 09001409109">
+                <div class="contact-name">📌 Viyana</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09001409109" class="contact-tel">0900 140 9109</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="پارسا دایی 09010366856">
+                <div class="contact-name">📌 پارسا دایی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09010366856" class="contact-tel">0901 036 6856</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="هم کلاسی زبان Elementary 09025351254">
+                <div class="contact-name">📌 هم کلاسی زبان Elementary</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09025351254" class="contact-tel">0902 535 1254</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="SAM 09054883441">
+                <div class="contact-name">📌 SAM</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09054883441" class="contact-tel">0905 488 3441</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="اوستاد زبان انگلیسی 09131962791">
+                <div class="contact-name">📌 اوستاد زبان انگلیسی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09131962791" class="contact-tel">0913 196 2791</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="اکبری 09103052265">
+                <div class="contact-name">📌 اکبری</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09103052265" class="contact-tel">0910 305 2265</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="عمه مونس 09131975672">
+                <div class="contact-name">📌 عمه مونس</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09131975672" class="contact-tel">0913 197 5672</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="Father 09133878847">
+                <div class="contact-name">📌 Father 👨</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09133878847" class="contact-tel">0913 387 8847</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="اقای فرزین استاد دفاعی 09133955012">
+                <div class="contact-name">📌 اقای فرزین استاد دفاعی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09133955012" class="contact-tel">0913 395 5012</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="سازور 09135037604">
+                <div class="contact-name">📌 سازور</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09135037604" class="contact-tel">0913 503 7604</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="خاله عاطفه +989365955957">
+                <div class="contact-name">📌 خاله عاطفه</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989365955957" class="contact-tel">+98 936 595 5957</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="معلم ریاضی 09136196163">
+                <div class="contact-name">📌 معلم ریاضی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09136196163" class="contact-tel">0913 619 6163</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="محمد سلیمان 09135984644">
+                <div class="contact-name">📌 محمد سلیمان</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09135984644" class="contact-tel">0913 598 4644</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="سلیمانی 09136647465">
+                <div class="contact-name">📌 سلیمانی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09136647465" class="contact-tel">0913 664 7465</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="Mother2 +989137613983">
+                <div class="contact-name">📌 Mother2👩</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989137613983" class="contact-tel">+98 913 761 3983</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="مامان طاها سیوندی 09137850021">
+                <div class="contact-name">📌 مامان طاها سیوندی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09137850021" class="contact-tel">0913 785 021</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="خاله فاطی 09140499075">
+                <div class="contact-name">📌 خاله فاطی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09140499075" class="contact-tel">0914 049 9075</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="استاد زبان pro 09139565938">
+                <div class="contact-name">📌 استاد زبان pro</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09139565938" class="contact-tel">0913 956 5938</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="کافی نت 09140630602">
+                <div class="contact-name">📌 کافی نت</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09140630602" class="contact-tel">0914 063 0602</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="رامین 09162767597">
+                <div class="contact-name">📌 رامین</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09162767597" class="contact-tel">0916 276 7597</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="مشاور-اقای دکتر فیروزیان 09194465458">
+                <div class="contact-name">📌 مشاور-اقای دکتر فیروزیان</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09194465458" class="contact-tel">0919 446 5458</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="ارمان سوري 09308710476">
+                <div class="contact-name">📌 ارمان سوري</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09308710476" class="contact-tel">0930 871 0476</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="کافی نت خاجو 09353558419">
+                <div class="contact-name">📌 کافی نت خاجو</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09353558419" class="contact-tel">0935 355 8419</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="پارسا خواجوی 09309816697">
+                <div class="contact-name">📌 پارسا خواجوی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09309816697" class="contact-tel">0930 981 6697</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="خاله سمیه 09357231889">
+                <div class="contact-name">📌 خاله سمیه</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09357231889" class="contact-tel">0935 723 1889</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="علی طیاری 09360448960">
+                <div class="contact-name">📌 علی طیاری</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09360448960" class="contact-tel">0936 044 8960</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="طاها سلطانی 09368414421">
+                <div class="contact-name">📌 طاها سلطانی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09368414421" class="contact-tel">0936 841 4421</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="Grandfather 09391837763">
+                <div class="contact-name">📌 Grandfather 👴</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09391837763" class="contact-tel">0939 183 7763</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="Mother 09395404661">
+                <div class="contact-name">📌 Mother 👩</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09395404661" class="contact-tel">0939 540 4661</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="Taha 09394375852">
+                <div class="contact-name">📌 Taha💙</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09394375852" class="contact-tel">0939 437 5852</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="Kian 09906364311">
+                <div class="contact-name">📌 Kian🩵</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09906364311" class="contact-tel">0990 636 4311</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="soldierDark 09902139317">
+                <div class="contact-name">📌 soldier*Dark</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09902139317" class="contact-tel">0990 213 9317</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="هم کلاسی زبان۱۰۳ 09934182082">
+                <div class="contact-name">📌 هم کلاسی زبان۱۰۳</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09934182082" class="contact-tel">0993 418 2082</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="هم کلاسی کانون ریاضی 09940857046">
+                <div class="contact-name">📌 هم کلاسی کانون ریاضی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09940857046" class="contact-tel">0994 085 7046</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="معلم ریاضی مدرسه اقای ایران نژاد +989132477186">
+                <div class="contact-name">📌 معلم ریاضی مدرسه اقای ایران نژاد 8/3</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989132477186" class="contact-tel">+98 913 247 7186</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="هم کلاسی زبان +989136791671">
+                <div class="contact-name">📌 هم کلاسی زبان</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989136791671" class="contact-tel">+98 913 679 1671</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="Hooman +989214979257">
+                <div class="contact-name">📌 Hooman💜</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989214979257" class="contact-tel">+98 921 497 9257</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="زاهدی +989216910068">
+                <div class="contact-name">📌 زاهدی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989216910068" class="contact-tel">+98 921 691 0068</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="ارش رجایی +989223036584">
+                <div class="contact-name">📌 ارش رجایی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989223036584" class="contact-tel">+98 922 303 6584</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item thomas-contact" data-search="خاله عاطفه +989362022346">
+                <div class="contact-name">📌 خاله عاطفه</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989362022346" class="contact-tel">+98 936 202 2346</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+        </div>
+        <div class="footer"><span>✦</span> مخاطبین توماس شلبی <span>✦</span></div>
+    </div>
+</div>
 
-            document.getElementById('countPeople').textContent = '۳';
-            document.getElementById('countTeams').textContent = '۰';
-            document.getElementById('countBanks').textContent = '۰';
-            document.getElementById('countUniversities').textContent = '۰';
-        })();
-    </script>
+<!-- ==================== نامی ==================== -->
+<div id="namiContactsPage" class="page">
+    <div class="card">
+        <button class="back-btn" onclick="switchPage('contactsPage')">↩ بازگشت به بخش مخاطبین</button>
+        <h1 class="nami-header">🌟 𝑵𝒂𝒎𝒊 †</h1>
+        <div class="sub nami-sub">مخاطبین نامی</div>
+        <div class="search-box">
+            <input type="text" id="namiSearchInput" placeholder="جستجو در مخاطبین نامی ...">
+            <button id="namiSearchBtn" aria-label="جستجو">🔍</button>
+        </div>
+        <div id="namiContactList">
+            <div class="contact-item nami-contact" data-search="آوش +989059685590">
+                <div class="contact-name">📌 آوش</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989059685590" class="contact-tel">+98 905 968 5590</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="امیر علی +989054413056">
+                <div class="contact-name">📌 امیر علی</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989054413056" class="contact-tel">+98 905 441 3056</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="کیانوش +989036325099">
+                <div class="contact-name">📌 کیانوش</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989036325099" class="contact-tel">+98 903 632 5099</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="اندازه اینترنت ایرانسل *555*1*4*1#">
+                <div class="contact-name">📌 اندازه اینترنت ایرانسل</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:*555*1*4*1%23" class="contact-tel">*555*1*4*1#</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="پوگبا +989028680048">
+                <div class="contact-name">📌 پوگبا</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989028680048" class="contact-tel">+98 902 868 0048</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="حسین مافیا +989213960620">
+                <div class="contact-name">📌 حسین مافیا</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989213960620" class="contact-tel">+98 921 396 0620</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Taha Gogoli +989159417518">
+                <div class="contact-name">📌 Taha Gogoli</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989159417518" class="contact-tel">+98 915 941 7518</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="پارسا رایتل سرور دار +989217630078">
+                <div class="contact-name">📌 پارسا (رایتل سرور دار)</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989217630078" class="contact-tel">+98 921 763 0078</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="اکس امیر +989398888353">
+                <div class="contact-name">📌 اکس امیر</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989398888353" class="contact-tel">+98 939 888 8353</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="my love +989926486857">
+                <div class="contact-name">📌 𝓶𝔂 𝓵𝓸𝓿𝓮 (^_^)</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989926486857" class="contact-tel">+98 992 648 6857</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="ستاره +989926486857">
+                <div class="contact-name">📌 ستاره💕</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989926486857" class="contact-tel">+98 992 648 6857</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="پارسا ۲ سرور دار +989926865548">
+                <div class="contact-name">📌 پارسا ۲ سرور دار</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989926865548" class="contact-tel">+98 992 686 5548</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="آقا محمد +989933601913">
+                <div class="contact-name">📌 آقا محمد</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989933601913" class="contact-tel">+98 993 360 1913</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Dad +989163058029">
+                <div class="contact-name">📌 Dad</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989163058029" class="contact-tel">+98 916 305 8029</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Mom +989163234695">
+                <div class="contact-name">📌 Mom</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989163234695" class="contact-tel">+98 916 323 4695</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Daei Hossin +989163068408">
+                <div class="contact-name">📌 Daei Hossin</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989163068408" class="contact-tel">+98 916 306 8408</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Artin +989166349545">
+                <div class="contact-name">📌 Artin</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989166349545" class="contact-tel">+98 916 634 9545</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Amir H +989339612402">
+                <div class="contact-name">📌 Amir [H]</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989339612402" class="contact-tel">+98 933 961 2402</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Melody +989916516042">
+                <div class="contact-name">📌 Melody</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989916516042" class="contact-tel">+98 991 651 6042</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Mani +989939498189">
+                <div class="contact-name">📌 Mani</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:+989939498189" class="contact-tel">+98 993 949 8189</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="حسین مافیا کلن دار 09148093154">
+                <div class="contact-name">📌 حسین مافیا کلن دار</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09148093154" class="contact-tel">0914 809 3154</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="شاید امیر باشه 09305303085">
+                <div class="contact-name">📌 شاید امیر باشه</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09305303085" class="contact-tel">0930 530 3085</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="پارسا بلژیک 09167440954">
+                <div class="contact-name">📌 پارسا (بلژیک)</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09167440954" class="contact-tel">0916 744 0954</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Amin 09335592409">
+                <div class="contact-name">📌 Amin</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09335592409" class="contact-tel">0933 559 2409</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="امیر علی که قراره بهش چیت بدم 09374197378">
+                <div class="contact-name">📌 امیر علی که قراره بهش چیت بدم</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09374197378" class="contact-tel">0937 419 7378</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Taha 09919116856">
+                <div class="contact-name">📌 Taha</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09919116856" class="contact-tel">09919116856</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="حسین 09930149673">
+                <div class="contact-name">📌 حسین</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09930149673" class="contact-tel">09930149673</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="همراه اول 09964143236">
+                <div class="contact-name">📌 همراه اول</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:09964143236" class="contact-tel">09964143236</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Police 110">
+                <div class="contact-name">📌 Police</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:110" class="contact-tel">110</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="اورژانس 115">
+                <div class="contact-name">📌 اورژانس 115</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:115" class="contact-tel">115</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+            <div class="contact-item nami-contact" data-search="Fire Station 125">
+                <div class="contact-name">📌 Fire Station</div>
+                <div class="contact-relation">🚹 شماره: <a href="tel:125" class="contact-tel">125</a></div>
+                <div class="contact-ip">📱 IP: -</div>
+            </div>
+        </div>
+        <div class="footer"><span>✦</span> مخاطبین نامی <span>✦</span></div>
+    </div>
+</div>
+
+<!-- ==================== توست ==================== -->
+<div class="toast" id="toast">✅ اطلاعات با موفقیت کپی شد!</div>
+
+<script>
+// ==============================================================
+// داده‌های اعضا (19 عضو کامل) - برای نمایش در تیم APT WAR
+// ==============================================================
+const membersData = [
+    { id:1, nickname:"دنی مشکی", fullName:"دانیال قلیزاده", age:15, birthDate:"1388/08/11", phone:"09367862532", location:"آذربایجان غربی · ارومیه · جانبازان", sorushIds:["@DANI_01"], telegramCount:"۱", instagram:"—", rubikaIds:["@azm_dani_ok"], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"علاقه دارم", hasCourse:"خیر", knowsTermux:"خیر" },
+    { id:2, nickname:"H4x", fullName:"امیرعباس کریمیان", age:17, birthDate:"۱۴ شهریور ۱۳۸۸", phone:"09333169066", location:"مشهد", sorushIds:["—"], telegramCount:"۱", instagram:"ندارم", rubikaIds:["(یکی)"], vipText:"پایبند به گارد جاوید", interest:"نامشخص", interestRaw:"—", hasCourse:"—", knowsTermux:"—" },
+    { id:3, nickname:"𝐴𝘴𝔱𝗋𝖔", fullName:"سوما پنجه علی پور", age:11, birthDate:"۱۳۹۳/۰۱/۱۰", phone:"۰۹۳۷۳۱۴۷۹۲۰", location:"ساری", sorushIds:["@harlequiinn"], telegramCount:"ندارم", instagram:"ندارم", rubikaIds:["@astro_pebbelll"], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"بله", hasCourse:"خیر", knowsTermux:"خیر" },
+    { id:4, nickname:"گانگستر تولسا", fullName:"امیرعلی فرهنگی", age:18, birthDate:"۱۳۸۶", phone:"۰۹۳۵۶۸۴۰۳۹۹", location:"نیروهوایی پیروزی", sorushIds:["(۱ دونه)"], telegramCount:"۱", instagram:"یدونه", rubikaIds:["@Amirmmmop"], vipText:"پایبند به گارد جاوید هستم", interest:"بله", interestRaw:"بله علاقه دارم", hasCourse:"خیر", knowsTermux:"خیر" },
+    { id:5, nickname:"شب دار", fullName:"هانیه ولی پور", age:13, birthDate:"۱۳۹۱/۰۱/۳۰", phone:"09928456014", location:"کرمانشاه · شهرک معلم", sorushIds:["(یک اکانت)"], telegramCount:"۱", instagram:"—", rubikaIds:["@R36933693"], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"بله (خیلی)", hasCourse:"خیر", knowsTermux:"خیر" },
+    { id:6, nickname:"CH", fullName:"امیرطاها فراهانی", age:14, birthDate:"۱۳۸۹/۰۴/۰۸", phone:"+9925092682", location:"اراک", sorushIds:["@CC_HH"], telegramCount:"۲", instagram:"—", rubikaIds:["@CCCCC__HHHHH","@CcCcCcCc_HhHhHhHh"], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"اره", hasCourse:"خیر", knowsTermux:"خیر" },
+    { id:7, nickname:"A_665", fullName:"امیر هاشمی", age:14, birthDate:"۱۳۹۰", phone:"09336062614", location:"تبریز", sorushIds:["(همین اک)"], telegramCount:"—", instagram:"—", rubikaIds:["@AmIr_hamin_dige"], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"بله", hasCourse:"بله", knowsTermux:"بله" },
+    { id:8, nickname:"ویندوز", fullName:"محمد موسی پور", age:16, birthDate:"—", phone:"۰۹۳۷۴۶۷۷۵۱۷", location:"سیرجان", sorushIds:["@Hegn_7"], telegramCount:"ندارم", instagram:"—", rubikaIds:["(یکی)"], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"بله", hasCourse:"بله", knowsTermux:"خیر" },
+    { id:9, nickname:"رمز گذار سایه", fullName:"امیر رضا غضنفری", age:15, birthDate:"—", phone:"۰۹۹۴۴۰۰۵۴۱۳", location:"نزدیک‌های کرمان", sorushIds:["@Amirtyiop","@amirreza13870"], telegramCount:"ندارم", instagram:"—", rubikaIds:["(۲ تا)"], vipText:"بعدش می‌فرستم", interest:"کم", interestRaw:"کم", hasCourse:"یکم", knowsTermux:"خیر" },
+    { id:10, nickname:"دریل", fullName:"محمد حسام ایمانی", age:19, birthDate:"۱۳۸۵", phone:"09330780656", location:"قم", sorushIds:["@Aaaaaaahu"], telegramCount:"۲ تا", instagram:"—", rubikaIds:["(۱)"], vipText:"پایبند به گارد جاوید", interest:"نامشخص", interestRaw:"—", hasCourse:"—", knowsTermux:"—" },
+    { id:11, nickname:"✶𝘿𝙖𝙣𝙜𝙚𝙧✯", fullName:"ابوالفضل عباسی", age:17, birthDate:"۱۳۸۷", phone:"09197213968", location:"همدان", sorushIds:["@Abol_fzla"], telegramCount:"—", instagram:"—", rubikaIds:["@Abolfzl_vt"], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"بله دارم", hasCourse:"خیر", knowsTermux:"آشنای کم" },
+    { id:12, nickname:"نازیی", fullName:"نازنین افروز", age:17, birthDate:"۱۳۸۷", phone:"09176992107", location:"بندر عباس", sorushIds:["@Nazi_21"], telegramCount:"یکی", instagram:"—", rubikaIds:["@Nazanin_2104"], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"بله", hasCourse:"بله خیلی کم", knowsTermux:"نه" },
+    { id:13, nickname:"مشکی", fullName:"یاسین کلهوری", age:19, birthDate:"۱۳۸۵/۱۰/۰۶", phone:"۰۹۹۴۵۲۴۲۸۴۲", location:"اصفهان · ایذه", sorushIds:["(۱ اکانت)"], telegramCount:"۱", instagram:"ندارم", rubikaIds:["@badcapitan2026"], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"بله علاقه دارم", hasCourse:"یک سری مباحث پایه", knowsTermux:"کمی آشنایی" },
+    { id:14, nickname:"ZX□♤", fullName:"محمد مقدم", age:16, birthDate:"—", phone:"+989218011092", location:"تهران", sorushIds:["(همین اکانت)"], telegramCount:"۱ دونه", instagram:"ندارم", rubikaIds:["@Ggkpojl1","@Skcslaj"], vipText:"به جاوید پایبندم", interest:"بله", interestRaw:"بله", hasCourse:"بله", knowsTermux:"بله" },
+    { id:15, nickname:"انتونی", fullName:"ابوالفضل احمدی", age:14, birthDate:"۱۳۹۰", phone:"۰۹۳۰۶۹۱۳۵۶۶", location:"اهواز", sorushIds:["(همین یکی)"], telegramCount:"۱", instagram:"—", rubikaIds:["@Oeveowgriwhrvej"], vipText:"پایبند به گارد جاوید", interest:"خیر", interestRaw:"نه", hasCourse:"خیر", knowsTermux:"خیر" },
+    { id:16, nickname:"طوقی", fullName:"محمدعلی مطوری", age:14, birthDate:"۱۳۹۰/۰۲/۰۹", phone:"09965564882", location:"تفت", sorushIds:["Mohamaad_34_off"], telegramCount:"—", instagram:"—", rubikaIds:[], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"بله", hasCourse:"خیر", knowsTermux:"خیر" },
+    { id:17, nickname:"آریا", fullName:"آریا مرادی", age:17, birthDate:"۱۳۸۷", phone:"09183248217", location:"کرمانشاه فردوسی", sorushIds:["Kord_11"], telegramCount:"—", instagram:"—", rubikaIds:["Kord_0056"], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"بله", hasCourse:"خیر", knowsTermux:"خیر" },
+    { id:18, nickname:"پریسا", fullName:"پریسا زارعی", age:13, birthDate:"۱۳۹۰/۰۵/۲۰", phone:"09021033526", location:"بوشهر · شهرستان خرموج", sorushIds:[], telegramCount:"۱", instagram:"ندارم الان", rubikaIds:[], vipText:"پایبند به گارد جاوید", interest:"بله", interestRaw:"بله", hasCourse:"خیر", knowsTermux:"خیر" },
+    { id:19, nickname:"محمد شوقی", fullName:"محمد شوقی مقدم", age:15, birthDate:"—", phone:"09216957256 · 09333554225", location:"تهران", sorushIds:[], telegramCount:"۱ (ایدی ندارد)", instagram:"ندارم", rubikaIds:[], vipText:"پایبند به گارد جاوید (ارسال نشده)", interest:"بله", interestRaw:"بله", hasCourse:"خیر", knowsTermux:"خیر" }
+];
+
+// ==============================================================
+// توابع
+// ==============================================================
+function getInterestClass(val) {
+    const v = val?.toLowerCase() || '';
+    if (v.includes('بله') || v.includes('علاقه') || v.includes('خیلی') || v.includes('اره')) return 'yes';
+    if (v.includes('کم') || v.includes('یکم') || v.includes('کمی')) return 'low';
+    return 'no';
+}
+
+function formatIdList(ids) {
+    if (!ids || ids.length === 0) return '<span class="badge-id">—</span>';
+    return ids.map(id => `<span class="badge-id">${id}</span>`).join(' · ');
+}
+
+function switchPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    var target = document.getElementById(pageId);
+    if (target) { target.classList.add('active'); }
+    if (pageId === 'teamDetailPage') {
+        renderTeamMembers();
+    }
+}
+
+// ==============================================================
+// رندر اعضای تیم APT WAR
+// ==============================================================
+function renderTeamMembers() {
+    const list = document.getElementById('teamMembersList');
+    if (!list) return;
+    
+    let html = '';
+    membersData.forEach(m => {
+        const ageDisplay = m.birthDate && m.birthDate !== '—' ? `${m.age} سال (${m.birthDate})` : `${m.age} سال`;
+        html += `
+            <div class="member-item" data-search="${m.fullName} ${m.nickname} ${m.phone} ${m.location}">
+                <div class="m-name">👤 ${m.fullName} <span style="color:#8899cc;font-size:0.8rem;">(${m.nickname})</span></div>
+                <div class="m-role">📱 <span class="m-phone">${m.phone}</span></div>
+                <div class="m-role">📍 ${m.location}</div>
+                <div class="m-role">👼 ${ageDisplay}</div>
+                <div class="m-role">🖇 سروش: ${m.sorushIds.join(', ') || '—'}</div>
+            </div>
+        `;
+    });
+    list.innerHTML = html;
+}
+
+// ==============================================================
+// تابع اسکرول به پروفایل افراد
+// ==============================================================
+function scrollToPerson(name) {
+    switchPage('mainPage');
+    setTimeout(() => {
+        const targetId = `person-${name}`;
+        const el = document.getElementById(targetId);
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            el.style.transition = 'all 0.3s ease';
+            el.style.borderColor = 'rgba(255, 215, 0, 0.6)';
+            el.style.boxShadow = '0 0 30px rgba(255, 215, 0, 0.2)';
+            setTimeout(() => {
+                el.style.borderColor = '';
+                el.style.boxShadow = '';
+            }, 2000);
+        }
+    }, 300);
+}
+
+// ==============================================================
+// جستجو
+// ==============================================================
+function setupSearch(inputId, btnId, listId) {
+    var input = document.getElementById(inputId);
+    var btn = document.getElementById(btnId);
+    var list = document.getElementById(listId);
+    if (!input || !btn || !list) return;
+    var items = list.querySelectorAll('.contact-item, .revelation-item, .member-item');
+
+    function doSearch() {
+        var query = input.value.trim().toLowerCase();
+        items.forEach(function(item) {
+            var searchData = (item.getAttribute('data-search') || '').toLowerCase();
+            var text = item.textContent.toLowerCase();
+            var match = query === '' || searchData.includes(query) || text.includes(query);
+            item.style.display = match ? 'block' : 'none';
+        });
+    }
+    btn.addEventListener('click', doSearch);
+    input.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') doSearch();
+        doSearch();
+    });
+}
+
+// ==============================================================
+// رویدادها
+// ==============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    // منوی ناوبری (بنفش)
+    const navBtn = document.getElementById('navMenuBtn');
+    const navDropdown = document.getElementById('navDropdown');
+    navBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        navDropdown.classList.toggle('open');
+    });
+    document.getElementById('navHome').addEventListener('click', function(e) {
+        e.preventDefault();
+        switchPage('mainPage');
+        navDropdown.classList.remove('open');
+    });
+    document.getElementById('navContacts').addEventListener('click', function(e) {
+        e.preventDefault();
+        switchPage('contactsPage');
+        navDropdown.classList.remove('open');
+    });
+    document.getElementById('navForms').addEventListener('click', function(e) {
+        e.preventDefault();
+        switchPage('teamsPage');
+        navDropdown.classList.remove('open');
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.nav-menu-btn') && !e.target.closest('.nav-dropdown')) {
+            navDropdown.classList.remove('open');
+        }
+    });
+
+    // تنظیم جستجوها
+    setupSearch('searchInput', 'searchBtn', 'revelationList');
+    setupSearch('darknessSearchInput', 'darknessSearchBtn', 'darknessContactList');
+    setupSearch('tiffanySearchInput', 'tiffanySearchBtn', 'tiffanyContactList');
+    setupSearch('naziSearchInput', 'naziSearchBtn', 'naziContactList');
+    setupSearch('thomasSearchInput', 'thomasSearchBtn', 'thomasContactList');
+    setupSearch('namiSearchInput', 'namiSearchBtn', 'namiContactList');
+    setupSearch('teamMemberSearchInput', 'teamMemberSearchBtn', 'teamMembersList');
+
+    // آمار صفحه اصلی
+    document.getElementById('countPeople').textContent = '۳';
+    document.getElementById('countTeams').textContent = '۱';
+    document.getElementById('countContacts').textContent = '۵';
+    document.getElementById('countUniversities').textContent = '۰';
+});
+</script>
 </body>
 </html>
