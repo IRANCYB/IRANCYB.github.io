@@ -1,5 +1,176 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<style>
+    /* ========== صفحه لودینگ ========== */
+
+    /* ========== استایل گلیچ هکری برای کلمه سایبری ========== */
+.hacker-glitch {
+    color: #00ff41;
+    text-shadow: 0 0 10px #00ff41;
+    position: relative;
+    display: inline-block;
+    animation: glitch 2s infinite;
+    font-weight: 700;
+}
+
+@keyframes glitch {
+    0%, 100% { 
+        transform: skew(0deg, 0deg);
+        text-shadow: 0 0 10px #00ff41;
+    }
+    2% { 
+        transform: skew(2deg, -1deg);
+        text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff;
+    }
+    4% { 
+        transform: skew(-3deg, 2deg);
+        text-shadow: 3px 0 #ff00ff, -3px 0 #00ffff;
+    }
+    6% { 
+        transform: skew(0deg, 0deg);
+        text-shadow: 0 0 10px #00ff41;
+    }
+    20% { 
+        transform: skew(0deg, 0deg);
+        text-shadow: 0 0 10px #00ff41;
+    }
+    22% { 
+        transform: skew(-1deg, 1deg);
+        text-shadow: -1px 0 #ff00ff, 1px 0 #00ffff;
+    }
+    24% { 
+        transform: skew(0deg, 0deg);
+        text-shadow: 0 0 10px #00ff41;
+    }
+}
+    /* تمام استایل‌های قبلی ... */
+    
+    /* ========== استایل سه‌رنگ پرچم ایران با چشمک ========== */
+    .iran-flag-text {
+        display: inline-block;
+        font-weight: 900;
+        background: linear-gradient(to bottom, #00a651 0%, #00a651 33%, #ffffff 33%, #ffffff 66%, #ef2a2a 66%, #ef2a2a 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: flagGlow 1.5s ease-in-out infinite;
+        text-shadow: none;
+        position: relative;
+    }
+
+    @keyframes flagGlow {
+        0%, 100% {
+            filter: brightness(1) drop-shadow(0 0 5px rgba(0, 166, 81, 0.3));
+        }
+        50% {
+            filter: brightness(1.3) drop-shadow(0 0 20px rgba(0, 166, 81, 0.6)) drop-shadow(0 0 40px rgba(239, 42, 42, 0.4));
+        }
+    }
+
+    .iran-flag-text::before {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: -20px;
+        right: -20px;
+        bottom: -20px;
+        background: radial-gradient(circle, rgba(0,166,81,0.1), transparent 70%);
+        z-index: -1;
+        border-radius: 50%;
+        animation: pulseGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.1); }
+    }
+    /* ========== استایل سه‌رنگ پرچم ایران با چشمک خاموش/روشن ========== */
+.iran-flag-text {
+    display: inline-block;
+    font-weight: 900;
+    background: linear-gradient(to bottom, #00a651 0%, #00a651 33%, #ffffff 33%, #ffffff 66%, #ef2a2a 66%, #ef2a2a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: flagBlink 1.2s ease-in-out infinite;
+    text-shadow: none;
+    position: relative;
+}
+
+@keyframes flagBlink {
+    0%, 100% {
+        opacity: 0.3;
+        filter: brightness(0.5) drop-shadow(0 0 2px rgba(0, 166, 81, 0.1));
+        transform: scale(0.98);
+    }
+    50% {
+        opacity: 1;
+        filter: brightness(1.5) drop-shadow(0 0 30px rgba(0, 166, 81, 0.8)) drop-shadow(0 0 60px rgba(239, 42, 42, 0.5)) drop-shadow(0 0 80px rgba(255, 255, 255, 0.3));
+        transform: scale(1.02);
+    }
+}
+
+.iran-flag-text::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    right: -30px;
+    bottom: -30px;
+    background: radial-gradient(circle, rgba(0,166,81,0.15), transparent 70%);
+    z-index: -1;
+    border-radius: 50%;
+    animation: pulseBlink 1.2s ease-in-out infinite;
+}
+
+@keyframes pulseBlink {
+    0%, 100% { 
+        opacity: 0; 
+        transform: scale(0.8);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.2);
+    }
+}
+/* ========== افکت باران ماتریکس ========== */
+#matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.4;
+}
+#darknessContactList,
+#tiffanyContactList,
+#naziContactList,
+#thomasContactList,
+#namiContactList {
+    max-height: 400px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+/* اسکرول بار زیبا */
+#darknessContactList::-webkit-scrollbar,
+#tiffanyContactList::-webkit-scrollbar,
+#naziContactList::-webkit-scrollbar,
+#thomasContactList::-webkit-scrollbar,
+#namiContactList::-webkit-scrollbar {
+    width: 4px;
+}
+#darknessContactList::-webkit-scrollbar-thumb,
+#tiffanyContactList::-webkit-scrollbar-thumb,
+#naziContactList::-webkit-scrollbar-thumb,
+#thomasContactList::-webkit-scrollbar-thumb,
+#namiContactList::-webkit-scrollbar-thumb {
+    background: #00ff41;
+    border-radius: 10px;
+}
+</style>
+<html lang="fa" dir="rtl">   
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
@@ -156,6 +327,21 @@
         }
 
         /* ========== استایل جدید برای آمار ستونی و دکمه‌های ناوبری ========== */
+     <!-- ========== کپچا برای ورود به بخش‌های حساس ========== -->
+<div class="captcha-container" id="captchaContainer">
+    <div class="captcha-box">
+        <div class="captcha-header">
+            <span>🔒 کد امنیتی</span>
+            <button class="captcha-refresh" onclick="generateCaptcha()" title="تغییر کد">🔄</button>
+        </div>
+        <div class="captcha-code" id="captchaCode">ABCD12</div>
+        <div class="captcha-input-box">
+            <input type="text" id="captchaInput" placeholder="کد را وارد کنید..." maxlength="6">
+            <button class="captcha-verify-btn" onclick="verifyCaptchaForAccess('contactsPage')">✔ ورود به مخاطبین</button>
+        </div>
+        <div class="captcha-message" id="captchaMessage"></div>
+    </div>
+</div>
         .stats-vertical {
             display: flex;
             flex-direction: column;
@@ -905,9 +1091,12 @@
     </style>
 </head>
 <body>
-
+ 
+<!-- ==================== افکت باران ماتریکس ==================== -->
+<canvas id="matrix-canvas"></canvas>
 <!-- ====================== منوی ناوبری (بنفش) ====================== -->
 <button class="nav-menu-btn" id="navMenuBtn" title="منو">☰</button>
+<!-- دکمه‌های ناوبری با کپچا -->
 <div class="nav-dropdown" id="navDropdown">
     <a href="#" id="navHome">🏠 خانه</a>
     <a href="#" id="navContacts">📋 مخاطبین افراد</a>
@@ -917,7 +1106,10 @@
 <!-- ==================== صفحه اصلی ==================== -->
 <div id="mainPage" class="page active">
     <div class="card">
-        <h1>🛩 ایران سآیبری</h1>
+<h1 style="position: relative; display: inline-block; width: 100%; text-align: center; font-size: 2.2rem; margin-bottom: 0.3rem; letter-spacing: 1px;">
+    🛩 <span class="iran-flag-text">ایران</span> <span class="hacker-glitch">سایبری</span>
+</h1>
+
         <div class="sub">آمار و جستجو</div>
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="جستجو ...">
@@ -1854,6 +2046,205 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('countTeams').textContent = '۱';
     document.getElementById('countContacts').textContent = '۵';
     document.getElementById('countUniversities').textContent = '۰';
+});
+// ==============================================================
+// افکت باران ماتریکس
+// ==============================================================
+function initMatrixRain() {
+    const canvas = document.getElementById('matrix-canvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let columns;
+    let drops;
+    const fontSize = 14;
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+{}|:<>?~';
+
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        columns = Math.floor(width / fontSize);
+        drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * -100);
+        }
+    }
+
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#00ff41';
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+            const char = characters.charAt(Math.floor(Math.random() * characters.length));
+            const x = i * fontSize;
+            const y = drops[i] * fontSize;
+
+            // تغییر رنگ برای برخی کاراکترها
+            if (Math.random() > 0.98) {
+                ctx.fillStyle = '#ffffff';
+            } else if (Math.random() > 0.95) {
+                ctx.fillStyle = '#00ff88';
+            } else {
+                ctx.fillStyle = '#00ff41';
+            }
+
+            ctx.fillText(char, x, y);
+
+            if (y > height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    // راه‌اندازی
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // حلقه انیمیشن با نرخ فریم 30fps برای عملکرد بهتر
+    let lastTime = 0;
+    const interval = 1000 / 20;
+
+    function animate(time) {
+        if (time - lastTime > interval) {
+            drawMatrix();
+            lastTime = time;
+        }
+        requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+}
+
+// اجرای افکت ماتریکس وقتی صفحه لود شد
+document.addEventListener('DOMContentLoaded', function() {
+    // کدهای قبلی رو نگه دار...
+    
+    // اجرای ماتریکس
+    initMatrixRain();
+});
+// ==============================================================
+// صفحه لودینگ
+// ==============================================================
+// ==============================================================
+// کپچا با قابلیت هدایت به صفحات مختلف
+// ==============================================================
+let currentCaptcha = '';
+let pendingDestination = '';
+
+function generateCaptcha() {
+    const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let captcha = '';
+    for (let i = 0; i < 6; i++) {
+        captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    currentCaptcha = captcha;
+    
+    const captchaElement = document.getElementById('captchaCode');
+    if (captchaElement) {
+        captchaElement.textContent = captcha;
+    }
+    
+    const messageElement = document.getElementById('captchaMessage');
+    if (messageElement) {
+        messageElement.textContent = '';
+        messageElement.className = 'captcha-message';
+    }
+    
+    const inputElement = document.getElementById('captchaInput');
+    if (inputElement) {
+        inputElement.value = '';
+        inputElement.focus();
+    }
+}
+
+function verifyCaptchaForAccess(destination) {
+    const input = document.getElementById('captchaInput');
+    const message = document.getElementById('captchaMessage');
+    
+    if (!input || !message) return;
+    
+    const userInput = input.value.trim().toUpperCase();
+    
+    if (userInput === '') {
+        message.textContent = '⚠️ لطفاً کد را وارد کنید';
+        message.className = 'captcha-message error';
+        input.focus();
+        return;
+    }
+    
+    if (userInput === currentCaptcha) {
+        message.textContent = '✅ کد صحیح است! در حال انتقال...';
+        message.className = 'captcha-message success';
+        input.style.borderColor = '#4ade80';
+        input.style.boxShadow = '0 0 20px rgba(74, 222, 128, 0.2)';
+        
+        // بعد از ۰.۵ ثانیه به صفحه مورد نظر برو
+        setTimeout(() => {
+            switchPage(destination);
+            // بعد از انتقال، کپچا رو دوباره تولید کن
+            setTimeout(() => {
+                generateCaptcha();
+                input.style.borderColor = '';
+                input.style.boxShadow = '';
+                // پیام رو پاک کن
+                if (message) {
+                    message.textContent = '';
+                    message.className = 'captcha-message';
+                }
+            }, 500);
+        }, 500);
+        
+    } else {
+        message.textContent = '❌ کد وارد شده اشتباه است';
+        message.className = 'captcha-message error';
+        input.style.borderColor = '#f87171';
+        input.style.boxShadow = '0 0 20px rgba(248, 113, 113, 0.2)';
+        input.value = '';
+        input.focus();
+        
+        setTimeout(() => {
+            input.style.borderColor = '';
+            input.style.boxShadow = '';
+        }, 1000);
+    }
+}
+
+// تابع ورود به مخاطبین با کپچا
+function accessContacts() {
+    pendingDestination = 'contactsPage';
+    // اسکرول به کپچا
+    document.getElementById('captchaContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('captchaInput').focus();
+}
+
+// تابع ورود به تیم‌های هکری با کپچا
+function accessTeams() {
+    pendingDestination = 'teamsPage';
+    document.getElementById('captchaContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('captchaInput').focus();
+}
+
+// اجرا با کلید Enter
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('captchaInput');
+    if (input) {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                if (pendingDestination) {
+                    verifyCaptchaForAccess(pendingDestination);
+                }
+            }
+        });
+    }
+    
+    generateCaptcha();
 });
 </script>
 </body>
